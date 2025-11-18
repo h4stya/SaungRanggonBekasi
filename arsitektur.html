@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Saung Ranggon — Arsitektur & Desain</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wood:#8B5E3C; --bamboo:#F3E5AB; --forest:#2E5A33; --cream:#FBF7EE;
+  --muted:#606060; --accent1:#7EEFA3; --accent2:#2EC56C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Poppins",sans-serif;
+  background: linear-gradient(180deg,#fbf7ee,#f0ebe3);
+  color:#222; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+
+/* PROGRESS */
+#progress{ position:fixed; left:0; top:0; height:4px; width:0; background:linear-gradient(90deg,var(--accent1),var(--accent2)); z-index:2000; box-shadow:0 6px 18px rgba(46,197,108,0.12); }
+
+/* NAVBAR */
+.navbar{
+  position:sticky; top:0; z-index:1400; display:flex;align-items:center;justify-content:space-between;
+  padding:10px 18px; gap:12px;
+  background: linear-gradient(180deg, rgba(139,94,60,0.96), rgba(139,94,60,0.9));
+  color:white; box-shadow:0 8px 28px rgba(0,0,0,.18);
+}
+.logo{ font-family:"Cinzel Decorative",serif; font-size:20px; color:var(--bamboo); display:flex;align-items:center; gap:12px;}
+.logo img{ width:44px; height:44px; object-fit:cover; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.22); }
+.nav-links{ list-style:none; display:flex; gap:12px; align-items:center; margin:0; padding:0;}
+.nav-links a{ color:rgba(255,255,255,0.95); text-decoration:none; padding:8px 12px; border-radius:8px; font-weight:600; transition:all .18s ease;}
+.nav-links a.active, .nav-links a:hover{ background: rgba(255,255,255,0.06); }
+
+/* PAGE HEADER */
+.page-header{ 
+  position:relative; 
+  min-height:56vh; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  overflow:hidden; 
+  border-bottom-left-radius:22px; 
+  border-bottom-right-radius:22px; 
+}
+
+.page-header-bg-layer{ 
+  position:absolute; 
+  inset:0; 
+  background-size:cover; 
+  background-position:center; 
+  background-attachment:fixed; 
+  filter:brightness(.58) contrast(1.08) saturate(1.1); 
+  z-index:1; 
+  animation:zoomInSlow 14s ease-in-out infinite alternate; 
+}
+
+@keyframes zoomInSlow{ from{transform:scale(1)} to{transform:scale(1.12)} }
+
+.page-header-overlay{ 
+  position:absolute; 
+  inset:0; 
+  background:linear-gradient(135deg, rgba(0,0,0,0.15), rgba(0,0,0,0.52)), 
+             radial-gradient(800px 400px at 15% 20%, rgba(126,239,163,0.08), transparent); 
+  z-index:2; 
+  backdrop-filter:blur(0.5px);
+}
+
+.page-header-inner{ 
+  position:relative; 
+  z-index:6; 
+  text-align:left; 
+  color:white; 
+  max-width:1100px; 
+  padding:48px 32px;
+  animation:fadeInUp 1s ease-out forwards;
+}
+
+.page-title{ 
+  font-family:"Cinzel Decorative",serif; 
+  font-size: clamp(32px,5vw,56px); 
+  margin-bottom:16px; 
+  opacity:0; 
+  transform:translateY(25px); 
+  animation:slideDownTitle .8s ease forwards; 
+  text-shadow:0 10px 30px rgba(0,0,0,0.6), 0 0 40px rgba(126,239,163,0.2);
+  font-weight:700;
+  letter-spacing:-0.5px;
+}
+
+.page-sub{ 
+  font-size:1.15rem; 
+  color:rgba(255,255,255,0.98); 
+  max-width:780px; 
+  opacity:0; 
+  transform:translateY(25px); 
+  animation:slideDownSub .8s ease .2s forwards; 
+  text-shadow:0 6px 18px rgba(0,0,0,0.5);
+  line-height:1.8;
+}
+
+@keyframes slideDownTitle{ to{opacity:1;transform:translateY(0)} }
+@keyframes slideDownSub{ to{opacity:1;transform:translateY(0)} }
+@keyframes fadeInUp{ to{opacity:1;transform:translateY(0)} }
+
+/* CONTAINER */
+.container{ max-width:1100px; margin:32px auto; padding:0 18px; }
+
+/* FEATURE CARDS GRID */
+.features-grid{ 
+  display:grid; 
+  grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); 
+  gap:24px; 
+  margin:36px 0;
+}
+
+.feature-card{ 
+  background:linear-gradient(135deg, #ffffff 0%, #fbf9f6 100%);
+  padding:28px; 
+  border-radius:16px; 
+  box-shadow:0 14px 42px rgba(0,0,0,0.07);
+  opacity:0; 
+  transform:translateY(24px); 
+  transition:.7s cubic-bezier(.2,.9,.2,1);
+  border-top:5px solid var(--accent2);
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.feature-card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  width:120px;
+  height:120px;
+  background:radial-gradient(circle, rgba(126,239,163,0.06), transparent);
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.feature-card.visible{ opacity:1; transform:none; }
+
+.feature-card:hover{
+  transform:translateY(-12px) rotateY(3deg);
+  box-shadow:0 28px 72px rgba(139,94,60,0.15), 0 0 60px rgba(126,239,163,0.2);
+  border-top-color:var(--accent1);
+}
+
+.feature-icon{ 
+  font-size:3rem; 
+  margin-bottom:12px;
+  animation:float 3s ease-in-out infinite;
+}
+
+.feature-card:nth-child(2) .feature-icon{ animation-delay:.2s; }
+.feature-card:nth-child(3) .feature-icon{ animation-delay:.4s; }
+.feature-card:nth-child(4) .feature-icon{ animation-delay:.6s; }
+
+@keyframes float{ 0%, 100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+.feature-title{ 
+  font-family:"Cinzel Decorative",serif; 
+  color:var(--wood); 
+  margin-bottom:10px; 
+  font-size:1.3rem;
+  font-weight:700;
+}
+
+.feature-desc{ 
+  color:var(--muted); 
+  line-height:1.7;
+  font-weight:500;
+}
+
+/* CARD */
+.card{ 
+  background:linear-gradient(135deg, #ffffff 0%, #fbf9f6 100%);
+  padding:28px; 
+  border-radius:16px; 
+  box-shadow:0 14px 42px rgba(0,0,0,0.07);
+  margin-bottom:24px; 
+  opacity:0; 
+  transform:translateY(24px); 
+  transition:.7s cubic-bezier(.2,.9,.2,1);
+  border-top:3px solid var(--accent2);
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  width:120px;
+  height:120px;
+  background:radial-gradient(circle, rgba(126,239,163,0.06), transparent);
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.card.visible{ opacity:1; transform:none; }
+
+.card h2{ 
+  font-family:"Cinzel Decorative",serif; 
+  color:var(--wood); 
+  margin-bottom:12px; 
+  font-size:1.7rem;
+  background:linear-gradient(135deg, var(--wood), #A67C52);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.card h3{ 
+  color:var(--accent2); 
+  margin-top:18px; 
+  margin-bottom:10px;
+  font-size:1.1rem;
+  font-weight:700;
+}
+
+.card p{ 
+  color:var(--muted); 
+  line-height:1.8;
+  font-weight:500;
+}
+
+.card ul{ 
+  margin-left:24px; 
+  color:var(--muted); 
+}
+
+.card li{ 
+  margin-bottom:10px;
+  list-style-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%232EC56C' rx='1'/%3E%3C/svg%3E");
+}
+
+/* HIGHLIGHT BOX */
+.highlight-box{ 
+  background:linear-gradient(135deg, rgba(126,239,163,0.12), rgba(46,197,108,0.06)); 
+  border-left:5px solid var(--accent2); 
+  border-radius:12px; 
+  padding:18px; 
+  margin:18px 0;
+  position:relative;
+  backdrop-filter:blur(8px);
+}
+
+.highlight-box::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  border-radius:12px;
+  pointer-events:none;
+}
+
+.highlight-box p{
+  position:relative;
+  color:var(--muted);
+  font-weight:500;
+}
+
+/* IMAGE SHOWCASE */
+.image-showcase{
+  position:relative;
+  margin:24px 0;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,0.12);
+}
+
+.image-showcase img{
+  width:100%;
+  height:auto;
+  display:block;
+  transition:transform .5s cubic-bezier(.2,.9,.2,1);
+}
+
+.image-showcase:hover img{
+  transform:scale(1.04);
+}
+
+.image-caption{
+  background:linear-gradient(180deg, transparent, rgba(0,0,0,0.7));
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:24px;
+  color:white;
+  font-weight:600;
+  opacity:0;
+  transition:opacity .3s ease;
+}
+
+.image-showcase:hover .image-caption{
+  opacity:1;
+}
+
+/* GALLERY */
+.gallery-grid{ 
+  display:grid; 
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); 
+  gap:16px; 
+  margin-top:20px;
+}
+
+.gallery-item{ 
+  position:relative;
+  border-radius:12px; 
+  overflow:hidden;
+  box-shadow:0 12px 36px rgba(0,0,0,0.1);
+  cursor:pointer;
+  aspect-ratio:1;
+}
+
+.gallery-item img{ 
+  width:100%; 
+  height:100%;
+  object-fit:cover; 
+  transition:transform .4s cubic-bezier(.2,.9,.2,1), filter .4s ease;
+}
+
+.gallery-item:hover img{ 
+  transform:scale(1.12) rotate(2deg);
+  filter:brightness(1.1);
+}
+
+.gallery-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, rgba(126,239,163,0.2), rgba(46,197,108,0.4));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transition:opacity .3s ease;
+}
+
+.gallery-item:hover .gallery-overlay{
+  opacity:1;
+}
+
+.gallery-overlay-text{
+  color:white;
+  font-weight:700;
+  font-size:1.2rem;
+  text-shadow:0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* PARTICLE CANVAS */
+#particleCanvas{ position:fixed; inset:0; width:100%; height:100%; z-index:80; pointer-events:none; mix-blend-mode:screen; }
+
+/* CONTROL */
+.particles-toggle{ 
+  position:fixed; 
+  right:18px; 
+  bottom:18px; 
+  z-index:1200; 
+  padding:12px 16px; 
+  border-radius:14px; 
+  border:none; 
+  background:linear-gradient(135deg,var(--accent1),var(--accent2)); 
+  color:#04260d; 
+  font-weight:700;
+  font-size:.9rem;
+  box-shadow:0 12px 32px rgba(46,197,108,0.2); 
+  cursor:pointer; 
+  transition:all .3s ease;
+}
+
+.particles-toggle:hover{ 
+  transform:translateY(-4px) scale(1.08); 
+  box-shadow:0 16px 48px rgba(46,197,108,0.3); 
+}
+
+.particles-toggle:active{ transform:scale(0.95); }
+
+/* LIGHTBOX */
+.lightbox{ 
+  position:fixed; 
+  inset:0; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  background:rgba(0,0,0,0.92); 
+  z-index:1600;
+  animation:fadeIn .3s ease;
+  backdrop-filter:blur(4px);
+}
+
+@keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+
+.lightbox img{ 
+  max-width:94%; 
+  max-height:88%; 
+  border-radius:14px; 
+  box-shadow:0 24px 96px rgba(0,0,0,0.8);
+  animation:zoomIn .3s cubic-bezier(.2,.9,.2,1);
+}
+
+@keyframes zoomIn{ from{transform:scale(0.8) rotate(-5deg)} to{transform:scale(1) rotate(0)} }
+
+.lightbox button{ 
+  position:fixed; 
+  right:28px; 
+  top:28px; 
+  padding:12px 16px; 
+  border-radius:12px; 
+  border:none; 
+  background:linear-gradient(135deg, #fff, #f5f5f5);
+  font-weight:700; 
+  cursor:pointer; 
+  z-index:1700;
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+  transition:all .2s ease;
+  font-size:1.2rem;
+}
+
+.lightbox button:hover{ 
+  transform:scale(1.12);
+  box-shadow:0 12px 36px rgba(0,0,0,0.4);
+}
+
+/* FOOTER */
+.footer{ 
+  text-align:center; 
+  padding:24px; 
+  color:var(--muted); 
+  margin-top:36px; 
+  border-top:2px solid rgba(139,94,60,0.15);
+  background:linear-gradient(135deg, rgba(255,255,255,0.5), rgba(243,229,171,0.3));
+  font-weight:500;
+}
+
+/* RESPONSIVE */
+@media(max-width:920px){ 
+  .page-header-inner{ text-align:center; padding:36px 20px; } 
+  .features-grid{ grid-template-columns:1fr; gap:18px; }
+  .page-header-bg-layer{ background-attachment:scroll; }
+  .card{ padding:20px; }
+  .card h2{ font-size:1.4rem; }
+}
+
+@media(max-width:640px){
+  .page-title{ font-size:28px; }
+  .page-sub{ font-size:1rem; }
+  .card{ padding:16px; }
+  .features-grid{ grid-template-columns:1fr; }
+  .gallery-grid{ grid-template-columns:repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<canvas id="particleCanvas" aria-hidden="true"></canvas>
+<button class="particles-toggle" id="particlesToggle">✨ Efek: ON</button>
+
+<header class="navbar" role="banner">
+  <div class="logo">
+    <img src="assets/logoi.png" alt="Saung Ranggon logo">
+    <span>Saung Ranggon Bekasi</span>
+  </div>
+  <nav>
+    <ul class="nav-links" role="menubar">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="sejarah.html">Sejarah</a></li>
+      <li><a href="arsitektur.html" class="active">Arsitektur</a></li>
+      <li><a href="galeri.html">Galeri</a></li>
+      <li><a href="nilai-budaya.html">Nilai Budaya</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="page-header" aria-label="Arsitektur header">
+  <div class="page-header-bg-layer" style="background-image:url('assets/header/hero1.JPG')"></div>
+  <div class="page-header-overlay"></div>
+  <div class="page-header-inner">
+    <h1 class="page-title">🏗️ Arsitektur & Desain Saung Ranggon</h1>
+    <p class="page-sub">Eksplorasi detail bangunan berusia ratusan tahun dengan teknik konstruksi tradisional Sunda yang masih kokoh hingga kini.</p>
+  </div>
+</section>
+
+<main class="container">
+  <!-- FITUR UTAMA -->
+  <section class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-icon">🏠</div>
+      <div class="feature-title">Rumah Panggung</div>
+      <div class="feature-desc">Ketinggian 2,5 meter untuk proteksi banjir dan simbolisme status sosial</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🌳</div>
+      <div class="feature-title">Material Kayu Langka</div>
+      <div class="feature-desc">Kayu ulin, nangka, dan jati yang bertahan ratusan tahun</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🔧</div>
+      <div class="feature-title">Tanpa Paku</div>
+      <div class="feature-desc">Sambungan pasak kayu & ikat tradisional menunjukkan keahlian tinggi</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🪨</div>
+      <div class="feature-title">Fondasi Batu</div>
+      <div class="feature-desc">Platform batu mencegah kelembaban dan rayap merusak struktur</div>
+    </div>
+  </section>
+
+  <!-- 1. STRUKTUR RUMAH PANGGUNG -->
+  <section class="card reveal">
+    <h2>1. Struktur Rumah Panggung 📐</h2>
+    <div class="image-showcase">
+      <img src="assets/header/hero1.JPG" alt="Struktur Rumah Panggung Saung Ranggon">
+      <div class="image-caption">Rumah Panggung dengan Ketinggian ~2,5 Meter</div>
+    </div>
+    <p>Saung Ranggon dibangun dengan prinsip rumah panggung yang merupakan arsitektur tradisional Nusantara. Ketinggian panggung sekitar 2,5 meter dari tanah melayani beberapa fungsi penting:</p>
+    <ul>
+      <li><strong>Proteksi banjir musiman</strong> — selama periode hujan deras, area di bawah rumah dapat tergenang tanpa merusak struktur utama</li>
+      <li><strong>Sirkulasi udara</strong> — angin dapat mengalir di bawah rumah, menjaga kayu tetap kering dan mencegah rayap</li>
+      <li><strong>Penyimpanan logistik</strong> — ruang di bawah panggung digunakan untuk menyimpan peralatan dan barang penting</li>
+      <li><strong>Simbol status sosial</strong> — pada masa lalu, tinggi panggung menunjukkan status pemilik rumah di masyarakat</li>
+    </ul>
+    <div class="highlight-box">
+      <p><strong>💡 Inovasi Genius:</strong> Desain panggung ini adalah solusi brilian untuk iklim tropis yang rawan banjir. Selain fungsional, desain ini juga menciptakan ruang semi-indoor yang bisa digunakan untuk berbagai aktivitas.</p>
+    </div>
+  </section>
+
+  <!-- 2. MATERIAL BANGUNAN -->
+  <section class="card reveal">
+    <h2>2. Material Bangunan — Kayu Langka 🌳</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="assets/galeri/kayu (1).webp" alt="Kayu Ulin">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">Kayu Ulin</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="assets/galeri/kayu (2).jpg" alt="Kayu Nangka">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">Kayu Nangka</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="assets/galeri/kayu (1).jpg" alt="Kayu Jati">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">Kayu Jati</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="assets/galeri/galeri (42).JPG" alt="Detail Struktur Kayu">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">Detail Struktur</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>a. Kayu Ulin — Material Terkeras</h3>
+    <p>Kayu ulin (Eusideroxylon zwageri) merupakan material utama struktur pendukung Saung Ranggon. Karakteristik kayu ulin:</p>
+    <ul>
+      <li><strong>Kekerasan luar biasa</strong> — berada di peringkat tertinggi dalam skala kekerasan kayu</li>
+      <li><strong>Ketahanan hingga ribuan tahun</strong> — bahkan dalam kondisi lembab, kayu ulin tetap kokoh</li>
+      <li><strong>Tahan rayap & penggerek</strong> — memiliki zat alami yang mengusir hama</li>
+      <li><strong>Warna gelap & berkilau</strong> — memberikan kesan megah dan mewah</li>
+    </ul>
+
+    <h3>b. Kayu Nangka — Fleksibilitas & Kekuatan</h3>
+    <p>Kayu nangka (Artocarpus heterophyllus) digunakan untuk bagian-bagian sekunder yang membutuhkan fleksibilitas:</p>
+    <ul>
+      <li>Balok horizontal dan penutup atap</li>
+      <li>Kurang keras dari kayu ulin tetapi lebih mudah dikerjakan</li>
+      <li>Tahan terhadap perubahan cuaca</li>
+    </ul>
+
+    <h3>c. Kayu Jati — Keindahan & Prestise</h3>
+    <p>Kayu jati (Tectona grandis) digunakan untuk finishing dan elemen dekoratif:</p>
+    <ul>
+      <li>Warna emas yang elegan</li>
+      <li>Mudah dipoles dan dirawat</li>
+      <li>Simbol kemewahan dan prestise</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p><strong>🌲 Keberlanjutan Historis:</strong> Pemilihan material ini menunjukkan pengetahuan mendalam tentang properti kayu. Pembangun Saung Ranggon memahami bahwa setiap jenis kayu memiliki fungsi spesifik dalam struktur bangunan.</p>
+    </div>
+  </section>
+
+  <!-- 3. TEKNIK SAMBUNGAN TANPA PAKU -->
+  <section class="card reveal">
+    <h2>3. Teknik Sambungan Tanpa Paku 🔧</h2>
+    <div class="image-showcase">
+      <img src="assets/galeri/galeri (32).JPG" alt="Teknik Sambungan Pasak Kayu">
+      <div class="image-caption">Detail Sambungan Pasak Kayu Tradisional</div>
+    </div>
+    <p>Salah satu fitur paling menakjubkan dari Saung Ranggon adalah <strong>seluruh struktur tidak menggunakan paku besi</strong>. Sebaliknya, digunakan teknik sambungan tradisional Sunda yang sangat presisi:</p>
+    
+    <h3>a. Sambungan Pasak (Mortise & Tenon)</h3>
+    <p>Teknik ini melibatkan pemotongan presisi pada ujung kayu:</p>
+    <ul>
+      <li><strong>Mortise</strong> — lubang kotak yang dipotong pada satu balok</li>
+      <li><strong>Tenon</strong> — tonjolan kotak yang dipotong pada balok lain untuk masuk ke mortise</li>
+      <li>Pasak kayu kecil kemudian didorong melalui lubang untuk mengunci sambungan</li>
+      <li>Sambungan ini menjadi semakin kuat seiring waktu karena kayu cenderung mengembang dan mengerut</li>
+    </ul>
+
+    <h3>b. Sambungan Ikat Tradisional</h3>
+    <p>Untuk sambungan diagonal dan ikatan, digunakan:</p>
+    <ul>
+      <li>Tali dari serat alami (kemungkinan rotan atau ijuk)</li>
+      <li>Teknik pengikatan yang rumit dan kuat</li>
+      <li>Memungkinkan fleksibilitas minor, berguna untuk tahan gempa</li>
+    </ul>
+
+    <h3>c. Keahlian Tinggi</h3>
+    <p>Pembuatan sambungan tanpa paku membutuhkan:</p>
+    <ul>
+      <li><strong>Keahlian pengukuran yang presisi</strong> — setiap potongan harus cocok sempurna</li>
+      <li><strong>Alat tradisional</strong> — gergaji tangan, pahat, dan pembor tradisional</li>
+      <li><strong>Pengalaman puluhan tahun</strong> — hanya tukang berpengalaman yang bisa melakukannya</li>
+      <li><strong>Kesabaran luar biasa</strong> — setiap sambungan dikerjakan dengan cermat</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p><strong>⭐ Prestasi Arkeitektur:</strong> Tidak adanya paku besi menunjukkan bahwa Saung Ranggon dibangun sebelum paku besi tersedia luas (atau pembangunnya memilih untuk tidak menggunakannya). Ini adalah bukti teknik konstruksi tingkat lanjut yang masih dipertahankan di era modern.</p>
+    </div>
+  </section>
+
+  <!-- 4. FONDASI BATU KALI -->
+  <section class="card reveal">
+    <h2>4. Fondasi Batu Kali — Inovasi Anti Rayap 🪨</h2>
+    <div class="image-showcase">
+      <img src="assets/galeri/galeri (31).JPG" alt="Fondasi Batu Kali Saung Ranggon">
+      <div class="image-caption">Fondasi Batu Pipih Mencegah Kontak Langsung dengan Tanah</div>
+    </div>
+    <p>Saung Ranggon tidak memiliki fondasi yang ditanam dalam tanah. Sebaliknya, tiang-tiang struktural diletakkan di atas <strong>batu pipih</strong> yang disusun secara kokoh di permukaan tanah.</p>
+
+    <h3>a. Keuntungan Fondasi Batu</h3>
+    <ul>
+      <li><strong>Mencegah kelembaban</strong> — kayu tidak menyentuh tanah yang lembab</li>
+      <li><strong>Mengurangi serangan rayap</strong> — rayap tanah tidak bisa mencapai struktur kayu dengan mudah</li>
+      <li><strong>Mencegah pembusukan kayu</strong> — kelembaban adalah musuh utama kayu, solusi ini menghindarinya</li>
+      <li><strong>Mudah diperbaiki</strong> — jika ada bagian yang rusak, mudah mengganti tiang tanpa menggali</li>
+    </ul>
+
+    <h3>b. Batu Pilihan</h3>
+    <p>Batu yang digunakan bukan sembarang batu:</p>
+    <ul>
+      <li><strong>Batu kali (andesit) — dipilih karena kuat dan tahan lama</strong></li>
+      <li>Permukaan atas diratakan agar tiang bisa ditaruh dengan stabil</li>
+      <li>Disusun dalam pola yang teratur dan kokoh</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p><strong>🧠 Desain Cerdas:</strong> Pendahulu kita telah menemukan solusi yang sangat efektif untuk masalah umum rumah panggung di iklim tropis. Fondasi batu ini membuat Saung Ranggon bertahan ratusan tahun tanpa pemeliharaan major.</p>
+    </div>
+  </section>
+
+  <!-- 5. ATAP JULANG NGAPAK -->
+  <section class="card reveal">
+    <h2>5. Atap Julang Ngapak — Desain Aerodinamis 🏠</h2>
+    <div class="image-showcase">
+      <img src="assets/galeri/galeri (123).JPG" alt="Atap Julang Ngapak Saung Ranggon">
+      <div class="image-caption">Atap "Sayap Burung" dengan Kemiringan Ideal</div>
+    </div>
+    <p>Bentuk atap Saung Ranggon sangat khas dan indah. Disebut "Atap Julang Ngapak" (Sunda: "julang" = terbang, "ngapak" = sayap), karena bentuknya mirip burung yang sedang membuka sayap untuk terbang.</p>
+
+    <h3>a. Karakteristik Atap Julang Ngapak</h3>
+    <ul>
+      <li><strong>Kemiringan curam</strong> (~45 derajat) untuk membuang air hujan dengan cepat</li>
+      <li><strong>Overhang lebar</strong> — elemen atap menonjol jauh ke depan dan belakang</li>
+      <li><strong>Garis melengkung</strong> yang memberi kesan elegan dan dinamis</li>
+      <li><strong>Bubungan tinggi</strong> — puncak atap menonjol dengan jelas</li>
+    </ul>
+
+    <h3>b. Fungsi Desain</h3>
+    <ul>
+      <li><strong>Drainase air optimal</strong> — tidak ada genangan air di atap</li>
+      <li><strong>Penghawaan dalam ruangan</strong> — celah udara di antara atap dan ruangan</li>
+      <li><strong>Proteksi dari terik matahari</strong> — overhang lebar melindungi dinding dari panas langsung</li>
+      <li><strong>Simbolisme</strong> — bentuk julang (terbang) melambangkan kebebasan dan perlindungan</li>
+    </ul>
+
+    <h3>c. Material Penutup Atap</h3>
+    <p>Atap menggunakan:</p>
+    <ul>
+      <li><strong>Sirap kayu</strong> — potongan kayu tipis yang ditumpuk untuk membentuk lapisan kedap air</li>
+      <li><strong>Pendekatan tradisional Jawa-Sunda</strong> — sudah terbukti tahan puluhan tahun</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p><strong>🎨 Estetika & Fungsi:</strong> Atap Julang Ngapak bukan hanya cantik untuk dipandang, tetapi juga sangat fungsional. Desain ini telah dibuktikan kokoh dalam menghadapi cuaca ekstrem tropis selama ratusan tahun.</p>
+    </div>
+  </section>
+
+  <!-- 6. DINDING & VENTILASI -->
+  <section class="card reveal">
+    <h2>6. Dinding & Ventilasi — Minimalis & Strategis 🪟</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="assets/galeri/galeri (12).JPG" alt="Detail Dinding">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">Detail Dinding</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="assets/galeri/galeri (14).JPG" alt="Ventilasi Kecil">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">Ventilasi Kecil (tertutup gorden)</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="assets/galeri/galeri (44).JPG" alt="Interior Saung">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">Interior Saung</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="assets/galeri/cahaya alami.JPG" alt="Pencahayaan Alami">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">Cahaya Alami</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>a. Desain Dinding Tertutup</h3>
+    <p>Dinding Saung Ranggon dibangun solid dengan kayu:</p>
+    <ul>
+      <li><strong>Tidak ada jendela besar</strong> — hanya ventilasi kecil selebar ~30 cm</li>
+      <li><strong>Privasi terjaga</strong> — orang di luar tidak bisa melihat ke dalam</li>
+      <li><strong>Pencahayaan terbatas</strong> — cocok untuk meditasi dan ritual spiritual</li>
+      <li><strong>Proteksi dari angin & binatang</strong> — ventilasi kecil mengontrol aliran udara</li>
+    </ul>
+
+    <h3>b. Ventilasi Strategis</h3>
+    <p>Ventilasi kecil ditempatkan dengan perhitungan:</p>
+    <ul>
+      <li><strong>Posisi silang</strong> — udara keluar masuk dari sisi berbeda untuk sirkulasi optimal</li>
+      <li><strong>Tinggi penempatan</strong> — di atas kepala untuk menghindari kontak langsung dengan pengguna</li>
+      <li><strong>Filter alami</strong> — cahaya masuk secara terfilter, menciptakan suasana tenang</li>
+    </ul>
+
+    <h3>c. Suasana Interior</h3>
+    <p>Kombinasi desain ini menciptakan:</p>
+    <ul>
+      <li>Suasana gelap yang nyaman untuk meditasi</li>
+      <li>Sirkulasi udara yang menjaga kesegaran</li>
+      <li>Sensasi keamanan dan perlindungan</li>
+      <li>Koneksi dengan alam melalui suara dan cahaya lembut</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p><strong>🧘 Desain Spiritual:</strong> Desain ini bukan kebetulan — ini adalah deliberate choice untuk menciptakan ruang yang kondusif untuk kegiatan spiritual dan diskusi penting. Dinding yang solid dan cahaya terbatas membantu konsentrasi dan introspeksi.</p>
+    </div>
+  </section>
+
+  <!-- 7. RUANG DALAM -->
+  <section class="card reveal">
+    <h2>7. Ruang Dalam — Tata Letak & Fungsi 🏛️</h2>
+    <div class="image-showcase">
+      <img src="assets/ruang dalam.JPG" alt="Ruang Dalam Saung Ranggon">
+      <div class="image-caption">Lantai Kayu Asli & Ruang Terbuka yang Fleksibel</div>
+    </div>
+    <p>Interior Saung Ranggon dirancang dengan prinsip fleksibilitas dan kesederhanaan. Tidak ada sekat permanen, memungkinkan penggunaan yang bervariasi sesuai kebutuhan.</p>
+
+    <h3>a. Lantai Kayu Asli</h3>
+    <ul>
+      <li><strong>Material kayu berkualitas</strong> — sama dengan struktur utama</li>
+      <li><strong>Permukaannya halus dari penggunaan ratusan tahun</strong></li>
+      <li><strong>Tidak pernah dicat atau disegel</strong> — mempertahankan karakter natural</li>
+      <li><strong>Bau kayu yang tenang</strong> — terapi aromaterapi alami</li>
+    </ul>
+
+    <h3>b. Ruang Terbuka Tanpa Sekat</h3>
+    <ul>
+      <li><strong>Fleksibilitas maksimal</strong> — bisa digunakan untuk pertemuan besar atau kecil</li>
+      <li><strong>Akustik alami</strong> — suara bergema dengan indah di ruangan</li>
+      <li><strong>Estetika minimalis</strong> — fokus pada struktur kayu yang indah</li>
+    </ul>
+
+    <h3>c. Area Khusus</h3>
+    <p>Meskipun tanpa sekat, ada beberapa area fungsional:</p>
+    <ul>
+      <li><strong>Area penyimpanan</strong> — sudut kecil untuk pusaka atau barang penting</li>
+      <li><strong>Area meditasi</strong> — biasanya di tengah ruangan</li>
+      <li><strong>Area diskusi</strong> — tempat duduk lesehan di lantai</li>
+      <li><strong>Altar spiritual</strong> — biasanya di bagian utara atau timur</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p><strong>📐 Desain Fungsional:</strong> Ruang terbuka ini mencerminkan budaya Sunda yang egaliter — tidak ada hierarki spasial yang ketat. Semua orang berada di level yang sama, menciptakan suasana demokratis dan inklusif.</p>
+    </div>
+  </section>
+
+  <!-- 8. TEKNIK KONSTRUKSI KESELURUHAN -->
+  <section class="card reveal">
+    <h2>8. Teknik Konstruksi Keseluruhan — Masterpiece 🎨</h2>
+    <div class="image-showcase">
+      <img src="assets/header/hero11.JPG"View Eksternal Saung Ranggon">
+      <div class="image-caption">Keseluruhan Struktur dari Perspektif Eksternal</div>
+    </div>
+
+    <h3>a. Integrasi Elemen</h3>
+    <p>Seluruh elemen bangunan terintegrasi dengan sempurna:</p>
+    <ul>
+      <li><strong>Fondasi batu → Tiang kayu ulin → Balok kayu nangka → Atap sirap kayu</strong></li>
+      <li>Setiap elemen mendukung yang lain dalam harmoni struktural</li>
+      <li>Tidak ada elemen yang redundan atau berlebihan</li>
+    </ul>
+
+    <h3>b. Ketahanan Struktur</h3>
+    <ul>
+      <li><strong>Sudut sambungan yang tepat</strong> — menyebarkan beban dengan merata</li>
+      <li><strong>Fleksibilitas minor</strong> — bisa bergerak sedikit saat gempa tanpa rusak</li>
+      <li><strong>Sistem self-bracing</strong> — struktur kayu saling memperkuat satu sama lain</li>
+    </ul>
+
+    <h3>c. Hasil: Ratusan Tahun Bertahan</h3>
+    <ul>
+      <li><strong>Bangunan masih kokoh setelah 400+ tahun</strong></li>
+      <li>Tidak ada kerusakan struktural yang signifikan</li>
+      <li>Membutuhkan perawatan minimal dengan biaya rendah</li>
+      <li>Menjadi Case Study dalam arsitektur tradisional sustainable</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p><strong>🏆 Warisan Arkeitektur:</strong> Saung Ranggon adalah bukti nyata bahwa aritektur tradisional dapat bertahan lebih lama dari bangunan modern yang menggunakan beton dan baja. Keberlanjutan sejati terletak pada pemilihan material yang tepat dan teknik konstruksi yang solid.</p>
+    </div>
+  </section>
+
+
+<footer class="footer">© 2025 Saung Ranggon Bekasi — Warisan Arkeitektur Tradisional Sunda yang Lestari 🏛️</footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+
+/* PROGRESS BAR */
+const progress = $('#progress');
+function updateProgress(){
+  const h = document.documentElement;
+  const val = (h.scrollTop || document.body.scrollTop) / (h.scrollHeight - h.clientHeight);
+  progress.style.width = Math.max(0, Math.min(1, val)) * 100 + '%';
+}
+window.addEventListener('scroll', updateProgress, {passive:true});
+updateProgress();
+
+/* PAGE PARALLAX */
+const phbg = document.querySelector('.page-header-bg-layer');
+if(phbg){
+  window.addEventListener('scroll', ()=> {
+    phbg.style.transform = `translateY(${window.scrollY * 0.08}px)`;
+  }, {passive:true});
+}
+
+/* SCROLL REVEAL */
+const reveals = $$('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=> { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: .08});
+reveals.forEach(el => io.observe(el));
+
+/* LIGHTBOX */
+function openLightbox(src){
+  const lb = document.createElement('div');
+  lb.className = 'lightbox';
+  lb.innerHTML = `<img src="${src}" /><button onclick="this.parentElement.remove()">✕</button>`;
+  lb.addEventListener('click', e => { if(e.target === lb) lb.remove(); });
+  document.body.appendChild(lb);
+}
+
+/* PARTICLES */
+(() => {
+  const canvas = document.getElementById('particleCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let DPR = Math.min(2, window.devicePixelRatio || 1);
+  function resize(){ canvas.width = innerWidth * DPR; canvas.height = innerHeight * DPR; canvas.style.width = innerWidth + 'px'; canvas.style.height = innerHeight + 'px'; ctx.setTransform(DPR,0,0,DPR,0,0); }
+  resize(); window.addEventListener('resize', ()=>{ DPR = Math.min(2, window.devicePixelRatio || 1); resize(); });
+
+  const glitters = Array.from({length: Math.min(180, Math.round(innerWidth/7))}, ()=>({
+    x: Math.random()*innerWidth, y: Math.random()*innerHeight, r: Math.random()*2.2+0.6, a: Math.random()*0.92+0.08, da: (Math.random()*0.032)+0.005
+  }));
+  const leaves = Array.from({length: innerWidth<900?6:14}, ()=>({
+    x: Math.random()*innerWidth, y: -Math.random()*innerHeight, size: 20+Math.random()*32, vy: 0.3+Math.random()*0.8, ang: Math.random()*Math.PI*2, spin: (Math.random()-0.5)*0.028
+  }));
+
+  let running = true;
+  document.addEventListener('visibilitychange', ()=> running = !document.hidden);
+  $('#particlesToggle').addEventListener('click', ()=>{
+    running = !running;
+    $('#particlesToggle').innerText = running ? '✨ Efek: ON' : '🔇 Efek: OFF';
+    if(!running) ctx.clearRect(0, 0, innerWidth, innerHeight);
+  });
+
+  function update(){
+    glitters.forEach(g=>{
+      g.a += (Math.random()-0.52)*0.12;
+      if(g.a < 0.05) g.a = 0.05;
+      if(g.a > 1) g.a = 1;
+      g.x += Math.sin(performance.now()*0.0007 + g.y*0.0004) * 0.45;
+      g.y += Math.cos(performance.now()*0.0006 + g.x*0.0005) * 0.15;
+      if(g.y > innerHeight + 50){ g.y = -30; g.x = Math.random()*innerWidth; }
+    });
+    leaves.forEach(l=>{
+      l.y += l.vy;
+      l.x += Math.sin(l.y*0.016 + performance.now()*0.0008) * 1.5;
+      l.ang += l.spin;
+      if(l.y > innerHeight + 100){ l.y = -50 - Math.random()*220; l.x = Math.random()*innerWidth; }
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    glitters.forEach(g=>{
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255,248,220,${g.a*0.8})`;
+      ctx.arc(g.x, g.y, g.r, 0, Math.PI*2);
+      ctx.fill();
+      ctx.strokeStyle = `rgba(126,239,163,${g.a*0.4})`;
+      ctx.lineWidth = 0.7;
+      ctx.stroke();
+    });
+    leaves.forEach(l=>{
+      ctx.save();
+      ctx.translate(l.x, l.y);
+      ctx.rotate(l.ang);
+      ctx.globalAlpha = 0.96;
+      ctx.fillStyle = 'rgba(139,94,60,0.94)';
+      ctx.beginPath(); ctx.ellipse(0,0,l.size*0.52,l.size*0.28,0,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle = 'rgba(163,110,71,0.5)';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+      ctx.restore();
+    });
+  }
+
+  function loop(){ if(!running) return; update(); draw(); requestAnimationFrame(loop); }
+  loop();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Saung Ranggon Bekasi — Home</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --wood:#8B5E3C;
+  --bamboo:#F3E5AB;
+  --forest:#324B2C;
+  --cream:#FBF7EE;
+  --muted:#6b6b6b;
+  --accent1:#7EEFA3;
+  --accent2:#2EC56C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:"Poppins",sans-serif;
+  background: linear-gradient(180deg,var(--cream), #f6f2ea);
+  color:#222;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.55;
+}
+
+/* NAVBAR */
+.navbar{
+  position:sticky; top:0; z-index:1400;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 20px; gap:12px;
+  background: linear-gradient(180deg, rgba(139,94,60,0.96), rgba(139,94,60,0.88));
+  color:white; box-shadow: 0 6px 22px rgba(0,0,0,0.18); backdrop-filter: blur(6px);
+}
+.logo{ font-family:"Cinzel Decorative",serif; font-size:20px; color:var(--bamboo); display:flex;align-items:center; gap:10px;}
+.logo img{ width:42px; height:42px; object-fit:cover; border-radius:8px; display:inline-block; }
+.nav-links{ list-style:none; display:flex; gap:12px; align-items:center; margin:0; padding:0;}
+.nav-links a{ color:rgba(255,255,255,0.95); text-decoration:none; padding:8px 12px; border-radius:8px; font-weight:600; transition:all 0.2s ease;}
+.nav-links a.active, .nav-links a:hover{ background: rgba(255,255,255,0.06); color:white; }
+
+/* HERO (stacked background slides) */
+.hero{
+  position:relative; min-height:78vh; display:flex; align-items:center; justify-content:center; overflow:hidden;
+  border-bottom-left-radius:20px; border-bottom-right-radius:20px;
+}
+.bg-wrap{ position:absolute; inset:0; z-index:1; overflow:hidden; }
+.bg-slide{
+  position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transform:scale(1.03);
+  transition:opacity .9s ease, transform .9s ease; filter:brightness(.66);
+}
+.bg-slide.active{ opacity:1; transform:scale(1); }
+.hero .overlay{ position:absolute; inset:0; background: linear-gradient(to bottom, rgba(0,0,0,0.18), rgba(0,0,0,0.45)); z-index:2; }
+.hero-inner{ position:relative; z-index:6; max-width:1200px; padding:36px; display:flex; gap:24px; align-items:center; color:white; }
+
+/* slider viewport (right column) */
+.slider{ position:relative; width:100%; height:60vh; border-radius:14px; overflow:hidden; box-shadow:0 18px 50px rgba(0,0,0,0.24); }
+.slide{ position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transform:scale(1.02); transition:opacity .9s ease, transform .9s ease; }
+.slide.active{ opacity:1; transform:scale(1); }
+.slide::before{ content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.22)); z-index:2; }
+.slide-caption{ position:absolute; left:28px; bottom:28px; z-index:9; background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.06)); padding:16px 20px; border-radius:12px; backdrop-filter: blur(6px); color:white; box-shadow: 0 14px 40px rgba(0,0,0,0.32); max-width:56%; }
+
+/* controls */
+.slider-controls{ position:absolute; right:18px; bottom:18px; display:flex; gap:10px; z-index:9; align-items:center; }
+.ctrl{ padding:8px 12px; border-radius:10px; border:none; background:rgba(255,255,255,0.08); color:white; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,0.2); }
+.dots{ display:flex; gap:8px; }
+.dots button{ width:10px; height:10px; border-radius:50%; border:none; background:rgba(255,255,255,0.35); cursor:pointer; padding:0; transition:transform .18s ease, background .18s ease; }
+.dots button.active{ background:linear-gradient(90deg,var(--accent1),var(--accent2)); transform:scale(1.15); box-shadow:0 8px 20px rgba(46,197,108,0.12); }
+
+/* CONTENT */
+.container{ width:100%; max-width:1150px; margin:28px auto; padding:0 20px; }
+.grid{ display:grid; gap:18px; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); align-items:stretch; }
+.card{ background:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(243,229,171,0.02)); padding:18px; border-radius:12px; box-shadow:0 10px 30px rgba(139,94,60,0.06); }
+.map-box{ width:100%; height:420px; border-radius:14px; overflow:hidden; border:6px solid rgba(139,94,60,0.95); box-shadow: 0 28px 60px rgba(0,0,0,0.12); }
+.footer{ padding:22px; text-align:center; color:var(--muted); margin-top:26px; border-top:1px solid rgba(0,0,0,0.03); }
+
+/* particle canvas */
+#particleCanvas{ position:fixed; inset:0; width:100%; height:100%; z-index:90; pointer-events:none; }
+
+/* small controls */
+.controls-fixed{ position:fixed; right:18px; top:100px; z-index:1500; display:flex; flex-direction:column; gap:10px; }
+.small-toggle{ padding:10px 12px; border-radius:12px; border:none; background:linear-gradient(180deg,#ffffff,#f0f0f0); color:#222; font-weight:700; box-shadow:0 10px 28px rgba(0,0,0,0.08); cursor:pointer; }
+
+/* gallery */
+.gallery{ display:grid; grid-template-columns: repeat(auto-fit,minmax(120px,1fr)); gap:10px; margin-top:12px; }
+.gallery img{ width:100%; height:120px; object-fit:cover; border-radius:8px; box-shadow:0 8px 20px rgba(0,0,0,0.08); cursor:pointer; transition:transform .18s ease; }
+.gallery img:hover{ transform:translateY(-6px); }
+
+@media (max-width:900px){
+  .hero-inner{ flex-direction:column; text-align:center; padding:18px; }
+  .slide-caption{ left:12px; right:12px; bottom:12px; max-width:unset; text-align:left; }
+  .map-box{ height:320px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="particleCanvas" aria-hidden="true"></canvas>
+<div class="controls-fixed" aria-hidden="false">
+  <button id="particlesToggle" class="small-toggle" aria-pressed="true">Efek Partikel: ON</button>
+  <button id="bgPauseBtn" class="small-toggle">Pause Slide</button>
+</div>
+
+<header class="navbar" role="banner">
+  <div class="logo">
+    <img src="assets/logoi.png" alt="Saung Ranggon logo">
+    <span>Saung Ranggon Bekasi</span>
+  </div>
+  <nav>
+    <ul class="nav-links" role="menubar">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="sejarah.html">Sejarah</a></li>
+      <li><a href="arsitektur.html">Arsitektur</a></li>
+      <li><a href="nilai-budaya.html">Nilai Budaya</a></li>
+      <li><a href="galeri.html">Galeri</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero" aria-label="Hero">
+  <div class="bg-wrap" aria-hidden="true">
+    <!-- 15 background slides: simpan assets/hero1.jpg .. hero15.jpg -->
+    <div class="bg-slide active" style="background-image:url('assets/header/hero1.JPG')"></div>
+    <div class="bg-slide" style="background-image:url('assets/header/hero2.JPG')"></div>
+    <div class="bg-slide" style="background-image:url('assets/header/hero3.JPG')"></div>
+    <div class="bg-slide" style="background-image:url('assets/header/hero4.JPG')"></div>
+    <div class="bg-slide" style="background-image:url('assets/header/hero5.JPG')"></div>
+    <div class="bg-slide" style="background-image:url('assets/header/hero6.JPG')"></div>
+    <div class="bg-slide" style="background-image:url('assets/header/hero7.JPG')"></div>
+    <div class="bg-slide" style="background-image:url('assets/header/hero8.JPG')"></div>
+    <div class="bg-slide" style="background-image:url('assets/header/hero9.JPG')"></div>
+    <div class="bg-slide" style="background-image:url('assets/header/hero10.JPG')"></div>
+    <div class="bg-slide" style="background-image:url('assets/header/hero11.JPG')"></div>
+    <div class="bg-slide" style="background-image:url('assets/header/hero12.JPG')"></div>
+    <div class="bg-slide" style="background-image:url('assets/header/hero13.JPG')"></div>
+    <div class="bg-slide" style="background-image:url('assets/header/hero15.JPG')"></div>
+    <div class="bg-slide" style="background-image:url('assets/header/hero14.JPG')"></div>
+  </div>
+
+  <div class="overlay" aria-hidden="true"></div>
+
+  <div class="hero-inner container">
+    <div style="flex:1">
+      <h1 style="font-family:'Cinzel Decorative',serif;color:#fff;font-size:clamp(28px,3.8vw,48px);margin-bottom:12px">Selamat Datang di Saung Ranggon Bekasi</h1>
+      <p style="color:rgba(255,255,255,0.95);max-width:560px">Warisan budaya adat Sunda — rumah panggung bersejarah di Cikedokan, Cikarang Barat. Jelajahi sejarah, arsitektur, dan nilai budaya yang mengakar kuat di masyarakat.</p>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+        <a class="card" style="display:inline-block;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#022;font-weight:700;padding:10px 16px;border-radius:12px;text-decoration:none" href="sejarah.html">Jelajahi Sejarah</a>
+        <a class="card" style="display:inline-block;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#fff;padding:10px 16px;border-radius:12px;text-decoration:none" href="#map-container">Lihat Lokasi</a>
+        <button id="ttsHomeBtn" class="card" style="display:inline-block;background:rgba(255,255,255,0.95);color:var(--wood);padding:10px 16px;border-radius:12px;border:none;cursor:pointer">Baca Suara</button>
+      </div>
+      <div class="tags" style="margin-top:14px">
+        <span class="tag">Rumah Panggung</span>
+        <span class="tag">Cagar Budaya Lokal</span>
+        <span class="tag">Arsitektur Tradisional</span>
+      </div>
+    </div>
+
+    <div style="flex:1">
+      <div class="slider" id="heroSlider" aria-roledescription="carousel" tabindex="0">
+        <div class="slide active" style="background-image:url('assets/slide1.jpg')">
+          <div class="slide-caption"><h4>Saung Ranggon — Jejak Warisan Sunda</h4><p>Rumah panggung, teknik tradisional, dan nilai sosial yang terjaga turun-temurun.</p></div>
+        </div>
+        <div class="slide" style="background-image:url('assets/slide2.jpg')">
+          <div class="slide-caption"><h4>Material & Teknik</h4><p>Kayu jati, bambu, atap ijuk, sambungan pasak — metode yang hemat material dan tahan lama.</p></div>
+        </div>
+        <div class="slide" style="background-image:url('assets/slide3.jpg')">
+          <div class="slide-caption"><h4>Ruang & Komunitas</h4><p>Tempat musyawarah, upacara kecil, dan interaksi antarwarga desa.</p></div>
+        </div>
+        <div class="slide" style="background-image:url('assets/slide4.jpg')">
+          <div class="slide-caption"><h4>Detail Ornamen</h4><p>Ukiran dan simbol lokal yang punya makna sosial dan spiritual.</p></div>
+        </div>
+        <div class="slide" style="background-image:url('assets/slide5.jpg')">
+          <div class="slide-caption"><h4>Renovasi & Pemeliharaan</h4><p>Perbaikan yang mempertahankan teknik tradisional sambil menambah kenyamanan.</p></div>
+        </div>
+
+        <div class="slider-controls">
+          <button class="ctrl" id="prevBtn" aria-label="Sebelumnya">◀</button>
+          <div id="heroDots" class="dots" role="tablist" aria-label="indikator slide"></div>
+          <button class="ctrl" id="nextBtn" aria-label="Berikutnya">▶</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="grid" style="margin-top:18px">
+    <article class="card">
+      <h3 style="color:var(--wood)">Sejarah Singkat</h3>
+      <p>Saung Ranggon — rumah panggung bersejarah di Desa Cikedokan, Cikarang Barat. Pusat musyawarah dan tradisi masyarakat lokal. Diduga dibangun pada abad ke-19 dan menjadi lokasi kegiatan panen serta pertemuan adat.</p>
+      <a href="sejarah.html" style="color:var(--forest);font-weight:700">Baca selengkapnya →</a>
+    </article>
+
+    <article class="card">
+      <h3 style="color:var(--wood)">Arsitektur</h3>
+      <p>Material utama kayu jati/ulin, bambu, atap ijuk; struktur panggung tinggi ±2,5 m; sambungan pasak kayu. Atap curam untuk aliran air dan ventilasi; lantai panggung menahan kelembaban.</p>
+      <a href="arsitektur.html" style="color:var(--forest);font-weight:700">Detail arsitektur →</a>
+    </article>
+
+    <article class="card">
+      <h3 style="color:var(--wood)">Nilai Budaya</h3>
+      <p>Fungsi: istirahat, musyawarah, penyimpanan hasil bumi. Simbol gotong royong & hormat leluhur. Tradisi perbaikan kolektif masih rutin dilakukan komunitas.</p>
+      <a href="nilai-budaya.html" style="color:var(--forest);font-weight:700">Lihat nilai budaya →</a>
+    </article>
+  </div>
+</section>
+
+<section class="container" style="margin-top:22px">
+  <div class="section-head">
+    <div>
+      <h2 style="color:var(--wood)">Tentang Saung Ranggon</h2>
+      <div class="meta">Lokasi: Cikedokan, Cikarang Barat • Koordinat tersedia di peta di bawah</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-weight:700;color:var(--forest)">Kunjungi Kami</div>
+      <div class="meta">Selasa — Minggu • 09:00 — 17:00</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:12px">
+    <div class="card">
+      <h4 style="color:var(--wood);margin-bottom:8px">Sejarah & Fungsi</h4>
+      <p>Saung Ranggon berfungsi sebagai pusat pertemuan informal, tempat penyimpanan hasil bumi, dan lokasi upacara adat kecil. Selain nilai praktisnya, saung juga menyimpan koleksi cerita lisan dan adat setempat.</p>
+      <h4 style="color:var(--wood);margin-top:12px">Agenda & Acara</h4>
+      <ul style="margin-left:18px;color:var(--muted)">
+        <li>Pasar tani bulanan — hari Minggu pertama tiap bulan</li>
+        <li>Pelatihan anyaman bambu & ukir lokal — setiap kuartal</li>
+        <li>Festival budidaya padi — musim panen</li>
+      </ul>
+    </div>
+
+    <aside class="card">
+      <h4 style="color:var(--wood)">Info Pengunjung</h4>
+      <p class="meta">Biaya masuk: sukarela / donasi untuk perawatan</p>
+      <p class="meta" style="margin-top:8px">Fasilitas: area parkir, toilet umum, penunjuk rute.</p>
+
+      <h4 style="color:var(--wood);margin-top:12px">Kontak (Juru Kunci)</h4>
+      <p class="meta">Tel: +62 858-8774-5288<br></p>
+
+      <h4 style="color:var(--wood);margin-top:12px">Galeri Singkat</h4>
+      <div class="gallery">
+        <img src="assets/header/hero1.JPG" alt="thumb1" onclick="openLightbox('assets/header/hero1.JPG')">
+        <img src="assets/header/hero8.JPG" alt="thumb2" onclick="openLightbox('assets/header/hero8.jpg')">
+        <img src="assets/header/hero10.JPG" alt="thumb3" onclick="openLightbox('assets/header/hero10.jpg')">
+        <img src="assets/header/keris.jpg " alt="thumb4" onclick="openLightbox('assets/header/keris.jpg')">
+      </div>
+    </aside>
+  </div>
+
+  <!-- NEW: map moved directly under "Agenda & Acara" inside its own container -->
+  <div id="map-container" class="map-wrapper" style="margin-top:18px;">
+    <div class="card" style="padding:12px;">
+      <h3 style="color:var(--wood);margin-bottom:6px">Lokasi Saung Ranggon</h3>
+      <p style="color:var(--muted);margin-bottom:12px">Kotak peta interaktif — klik untuk keterangan rute & perbesar. (Peta dipindahkan ke sini agar lebih dekat dengan agenda & acara.)</p>
+      <div class="map-box" aria-hidden="false" style="margin-top:6px">
+        <iframe title="Peta Saung Ranggon" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.238346226122!2d107.08581727499202!3d-6.231731261050247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e699bfbf91b2b0b%3A0xa3e49d51007f9a7!2sSaung%20Ranggon!5e0!3m2!1sid!2sid!4v1700455122330!5m2!1sid!2sid" width="100%" height="100%" style="border:0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">© 2025 Saung Ranggon Bekasi | Website Budaya & Sejarah Lokal</footer>
+
+<script>
+/* small helpers */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+
+/* LIGHTBOX */
+function openLightbox(src){
+  const l = document.createElement('div');
+  l.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:1600';
+  l.innerHTML = `<img src="${src}" style="max-width:92%;max-height:92%;border-radius:8px;box-shadow:0 18px 60px rgba(0,0,0,0.6)"><button aria-label="Tutup" style="position:fixed;right:18px;top:18px;padding:10px 12px;border-radius:10px;border:none;background:#fff;font-weight:700;cursor:pointer;z-index:1700">✕</button>`;
+  l.querySelector('button').onclick = ()=> document.body.removeChild(l);
+  l.addEventListener('click', e => { if(e.target === l) document.body.removeChild(l) });
+  document.body.appendChild(l);
+}
+
+/* PARTICLES (simple leaves + glitters) */
+(() => {
+  const canvas = document.getElementById('particleCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W = canvas.width = innerWidth, H = canvas.height = innerHeight;
+  canvas.style.width = innerWidth + 'px'; canvas.style.height = innerHeight + 'px';
+  window.addEventListener('resize', ()=>{ W = canvas.width = innerWidth; H = canvas.height = innerHeight; canvas.style.width = innerWidth + 'px'; canvas.style.height = innerHeight + 'px'; });
+
+  const leafImg = new Image();
+  leafImg.src = 'assets/leaf.png';
+
+  const leaves = [];
+  const glitters = [];
+  const maxLeaves = innerWidth < 900 ? 4 : 10;
+  const maxG = innerWidth < 900 ? 28 : 60;
+  for(let i=0;i<maxLeaves;i++) leaves.push({x:Math.random()*W,y:-Math.random()*H,size:20+Math.random()*40,speed:0.6+Math.random()*1.4,angle:Math.random()*Math.PI*2,spin:(Math.random()-0.5)*0.02});
+  for(let i=0;i<maxG;i++) glitters.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2+0.6,a:Math.random()*0.9,fade:(Math.random()*0.02)+0.005});
+
+  let enabled = true;
+  $('#particlesToggle').addEventListener('click', ()=>{
+    enabled = !enabled;
+    $('#particlesToggle').innerText = enabled ? 'Efek Partikel: ON' : 'Efek Partikel: OFF';
+    if(!enabled) ctx.clearRect(0,0,W,H);
+    else loop();
+  });
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    glitters.forEach(g=>{
+      g.a += g.fade;
+      if(g.a>1){ g.fade *= -1; g.a = 1; }
+      if(g.a<=0){ g.x = Math.random()*W; g.y = Math.random()*H; g.a = 0.02; g.fade *= -1; }
+      ctx.beginPath(); ctx.fillStyle = `rgba(255,215,90,${g.a})`; ctx.arc(g.x,g.y,g.r,0,Math.PI*2); ctx.fill();
+    });
+    const t = performance.now()/1000;
+    leaves.forEach(l=>{
+      l.y += l.speed * (1 + Math.sin(t*0.6 + l.x*0.001)*0.4);
+      l.x += Math.sin(t*0.3 + l.y*0.002) * 0.5;
+      l.angle += l.spin;
+      ctx.save();
+      ctx.translate(l.x,l.y);
+      ctx.rotate(l.angle);
+      ctx.globalAlpha = 0.95;
+      if(leafImg.complete) ctx.drawImage(leafImg, -l.size/2, -l.size/2, l.size, l.size);
+      else { ctx.fillStyle='rgba(60,110,40,0.9)'; ctx.beginPath(); ctx.ellipse(0,0,l.size*0.45,l.size*0.25,0,0,Math.PI*2); ctx.fill(); }
+      ctx.restore();
+      if(l.y - l.size > H + 40){ l.y = -40; l.x = Math.random()*W; }
+    });
+  }
+  function loop(){ if(!enabled) return; draw(); requestAnimationFrame(loop); }
+  loop();
+})();
+
+/* HERO background carousel + preload check + pause on hover */
+(() => {
+  const slides = Array.from(document.querySelectorAll('.bg-slide'));
+  if(!slides.length) return;
+  let idx = 0, timer = null, paused = false;
+
+  // check existence and provide gradient fallback
+  slides.forEach((el, i) => {
+    const url = (el.style.backgroundImage || '').replace(/^url\(["']?|["']?\)$/g,'').replace(/url\(|\)|"|'/g,'');
+    if(!url) return;
+    const img = new Image();
+    img.onload = () => {};
+    img.onerror = () => {
+      console.warn('Gambar hero tidak ditemukan:', url);
+      el.style.backgroundImage = 'linear-gradient(135deg, rgba(142,103,68,0.9), rgba(124,77,46,0.85))';
+      el.style.filter = 'brightness(0.82)';
+    };
+    img.src = url;
+  });
+
+  function show(i){
+    slides.forEach((s,k)=> s.classList.toggle('active', k===i));
+    idx = i;
+  }
+  function next(){ show((idx+1)%slides.length); }
+  const hero = document.querySelector('.hero');
+  hero.addEventListener('mouseenter', ()=>{ paused = true; if(timer) clearInterval(timer); });
+  hero.addEventListener('mouseleave', ()=>{ paused = false; reset(); });
+  hero.addEventListener('focusin', ()=>{ paused = true; if(timer) clearInterval(timer); }, true);
+  hero.addEventListener('focusout', ()=>{ paused = false; reset(); }, true);
+
+  function reset(){ if(timer) clearInterval(timer); timer = setInterval(()=>{ if(!paused) next(); }, 6000); }
+  show(0);
+  reset();
+
+  // manual pause button
+  $('#bgPauseBtn').addEventListener('click', ()=>{
+    paused = !paused;
+    $('#bgPauseBtn').innerText = paused ? 'Resume Slide' : 'Pause Slide';
+    if(paused && timer){ clearInterval(timer); }
+    if(!paused) reset();
+  });
+})();
+
+/* RIGHT slider (slides with captions) */
+(() => {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsContainer = $('#heroDots');
+  if(!slides.length || !dotsContainer) return;
+  let cur = 0, timer = null, paused = false;
+  slides.forEach((s,i)=>{
+    const b = document.createElement('button');
+    b.title = 'Slide ' + (i+1);
+    b.setAttribute('aria-label','Slide ' + (i+1));
+    b.addEventListener('click', ()=> goto(i));
+    dotsContainer.appendChild(b);
+  });
+  function show(i){
+    slides.forEach((s,idx)=> s.classList.toggle('active', idx===i));
+    Array.from(dotsContainer.children).forEach((d,idx)=> d.classList.toggle('active', idx===i));
+    cur = i;
+  }
+  function next(){ show((cur+1)%slides.length); }
+  function prev(){ show((cur-1+slides.length)%slides.length); }
+  function goto(i){ show(i); reset(); }
+
+  $('#nextBtn').addEventListener('click', ()=>{ next(); reset(); });
+  $('#prevBtn').addEventListener('click', ()=>{ prev(); reset(); });
+
+  const sliderEl = $('#heroSlider');
+  sliderEl.addEventListener('mouseenter', ()=>{ paused = true; if(timer) clearInterval(timer); });
+  sliderEl.addEventListener('mouseleave', ()=>{ paused = false; reset(); });
+  sliderEl.addEventListener('focusin', ()=>{ paused = true; if(timer) clearInterval(timer); }, true);
+  sliderEl.addEventListener('focusout', ()=>{ paused = false; reset(); }, true);
+
+  function reset(){ if(timer) clearInterval(timer); timer = setInterval(()=>{ if(!paused) next(); }, 6000); }
+  show(0); reset();
+})();
+
+/* TTS */
+$('#ttsHomeBtn').addEventListener('click', ()=>{
+  if(!('speechSynthesis' in window)){ alert('Browser tidak mendukung TTS'); return; }
+  const text = `Selamat datang di Saung Ranggon Bekasi. Temukan sejarah, arsitektur, dan nilai budaya rumah panggung tradisional ini. Untuk informasi lebih lanjut, jelajahi halaman sejarah dan galeri kami.`;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'id-ID'; u.rate = 0.98;
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+});
+
+/* small parallax */
+window.addEventListener('scroll', ()=> {
+  const active = document.querySelector('.bg-slide.active');
+  if(!active) return;
+  active.style.transform = `translateY(${window.scrollY * 0.08}px) scale(1.03)`;
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Saung Ranggon — Sejarah Lengkap</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wood:#8B5E3C; --bamboo:#F3E5AB; --forest:#2E5A33; --cream:#FBF7EE;
+  --muted:#606060; --accent1:#e67833; --accent2:#c5722e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Poppins",sans-serif;
+  background: linear-gradient(180deg,#fbf7ee,#f0ebe3);
+  color:#222; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+
+/* PROGRESS */
+#progress{ position:fixed; left:0; top:0; height:4px; width:0; background:linear-gradient(90deg,var(--accent1),var(--accent2)); z-index:2000; box-shadow:0 6px 18px rgba(46,197,108,0.12); }
+
+/* NAVBAR */
+.navbar{
+  position:sticky; top:0; z-index:1400; display:flex;align-items:center;justify-content:space-between;
+  padding:10px 18px; gap:12px;
+  background: linear-gradient(180deg, rgba(139,94,60,0.96), rgba(139,94,60,0.9));
+  color:white; box-shadow:0 8px 28px rgba(0,0,0,.18);
+}
+.logo{ font-family:"Cinzel Decorative",serif; font-size:20px; color:var(--bamboo); display:flex;align-items:center; gap:12px;}
+.logo img{ width:44px; height:44px; object-fit:cover; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.22); }
+.nav-links{ list-style:none; display:flex; gap:12px; align-items:center; margin:0; padding:0;}
+.nav-links a{ color:rgba(255,255,255,0.95); text-decoration:none; padding:8px 12px; border-radius:8px; font-weight:600; transition:all .18s ease;}
+.nav-links a.active, .nav-links a:hover{ background: rgba(255,255,255,0.06); }
+
+/* PAGE HEADER with BACKGROUND IMAGE */
+.page-header{ 
+  position:relative; 
+  min-height:56vh; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  overflow:hidden; 
+  border-bottom-left-radius:22px; 
+  border-bottom-right-radius:22px; 
+}
+
+.page-header-bg-layer{ 
+  position:absolute; 
+  inset:0; 
+  background-size:cover; 
+  background-position:center; 
+  background-attachment:fixed; 
+  filter:brightness(.58) contrast(1.08) saturate(1.1); 
+  z-index:1; 
+  animation:zoomInSlow 14s ease-in-out infinite alternate; 
+}
+
+@keyframes zoomInSlow{ from{transform:scale(1)} to{transform:scale(1.12)} }
+
+.page-header-overlay{ 
+  position:absolute; 
+  inset:0; 
+  background:linear-gradient(135deg, rgba(0,0,0,0.15), rgba(0,0,0,0.52)), 
+             radial-gradient(800px 400px at 15% 20%, rgba(126,239,163,0.08), transparent); 
+  z-index:2; 
+  backdrop-filter:blur(0.5px);
+}
+
+.page-header-inner{ 
+  position:relative; 
+  z-index:6; 
+  text-align:left; 
+  color:white; 
+  max-width:1100px; 
+  padding:48px 32px;
+  animation:fadeInUp 1s ease-out forwards;
+}
+
+.page-title{ 
+  font-family:"Cinzel Decorative",serif; 
+  font-size: clamp(32px,5vw,56px); 
+  margin-bottom:16px; 
+  opacity:0; 
+  transform:translateY(25px); 
+  animation:slideDownTitle .8s ease forwards; 
+  text-shadow:0 10px 30px rgba(0,0,0,0.6), 0 0 40px rgba(126,239,163,0.2);
+  font-weight:700;
+  letter-spacing:-0.5px;
+}
+
+.page-sub{ 
+  font-size:1.15rem; 
+  color:rgba(255,255,255,0.98); 
+  max-width:780px; 
+  opacity:0; 
+  transform:translateY(25px); 
+  animation:slideDownSub .8s ease .2s forwards; 
+  text-shadow:0 6px 18px rgba(0,0,0,0.5);
+  line-height:1.8;
+}
+
+@keyframes slideDownTitle{ to{opacity:1;transform:translateY(0)} }
+@keyframes slideDownSub{ to{opacity:1;transform:translateY(0)} }
+@keyframes fadeInUp{ to{opacity:1;transform:translateY(0)} }
+
+/* CONTAINER */
+.container{ max-width:1100px; margin:32px auto; padding:0 18px; }
+
+/* TIMELINE HEADER */
+.timeline-header{ 
+  display:grid; 
+  grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); 
+  gap:16px; 
+  margin:28px 0;
+}
+
+.timeline-card{ 
+  background:linear-gradient(135deg,#fff 0%, #fbf7ee 100%); 
+  padding:20px; 
+  border-radius:14px; 
+  box-shadow:0 12px 36px rgba(139,94,60,0.08); 
+  cursor:pointer; 
+  transition:all .3s cubic-bezier(0.2,0.8,0.2,1); 
+  border-left:5px solid var(--accent2);
+  position:relative;
+  overflow:hidden;
+}
+
+.timeline-card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg, transparent, rgba(126,239,163,0.1), transparent);
+  transition:left .6s ease;
+}
+
+.timeline-card:hover{
+  transform:translateY(-10px) rotateY(2deg); 
+  box-shadow:0 24px 60px rgba(139,94,60,0.15), 0 0 60px rgba(126,239,163,0.15); 
+  border-left-color:var(--accent1);
+}
+
+.timeline-card:hover::before{ left:100%; }
+
+.timeline-year{ 
+  font-family:"Cinzel Decorative",serif; 
+  font-size:1.6rem; 
+  color:var(--wood); 
+  font-weight:700;
+  background:linear-gradient(135deg, var(--wood), var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.timeline-desc{ 
+  font-size:.95rem; 
+  color:var(--muted); 
+  margin-top:8px;
+  font-weight:500;
+}
+
+/* CARD */
+.card{ 
+  background:linear-gradient(135deg, #ffffff 0%, #fbf9f6 100%);
+  padding:28px; 
+  border-radius:16px; 
+  box-shadow:0 14px 42px rgba(0,0,0,0.07);
+  margin-bottom:24px; 
+  opacity:0; 
+  transform:translateY(24px); 
+  transition:.7s cubic-bezier(.2,.9,.2,1);
+  border-top:3px solid var(--accent2);
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  width:120px;
+  height:120px;
+  background:radial-gradient(circle, rgba(126,239,163,0.06), transparent);
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.card.visible{ opacity:1; transform:none; }
+
+.card h2{ 
+  font-family:"Cinzel Decorative",serif; 
+  color:var(--wood); 
+  margin-bottom:12px; 
+  font-size:1.7rem;
+  background:linear-gradient(135deg, var(--wood), #A67C52);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.card h3{ 
+  color:var(--accent2); 
+  margin-top:18px; 
+  margin-bottom:10px;
+  font-size:1.05rem;
+  font-weight:600;
+}
+
+.card p{ 
+  color:var(--muted); 
+  line-height:1.8;
+  font-weight:500;
+}
+
+.card ul{ 
+  margin-left:24px; 
+  color:var(--muted); 
+}
+
+.card li{ 
+  margin-bottom:8px;
+  list-style-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Ccircle cx='3' cy='3' r='3' fill='%232EC56C'/%3E%3C/svg%3E");
+}
+
+/* HIGHLIGHT BOX */
+.highlight-box{ 
+  background:linear-gradient(135deg, rgba(126,239,163,0.1), rgba(46,197,108,0.05)); 
+  border-left:5px solid var(--accent2); 
+  border-radius:12px; 
+  padding:18px; 
+  margin:18px 0;
+  position:relative;
+  backdrop-filter:blur(8px);
+}
+
+.highlight-box::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  border-radius:12px;
+  pointer-events:none;
+}
+
+.highlight-box p{
+  position:relative;
+  color:var(--muted);
+  font-weight:500;
+}
+
+/* GALLERY */
+.gallery-grid{ 
+  display:grid; 
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); 
+  gap:14px; 
+  margin-top:16px;
+}
+
+.gallery-grid img{ 
+  width:100%; 
+  height:140px; 
+  object-fit:cover; 
+  border-radius:12px; 
+  cursor:pointer; 
+  box-shadow:0 10px 28px rgba(0,0,0,0.1); 
+  transition:all .3s cubic-bezier(0.2,0.8,0.2,1);
+  border:2px solid rgba(126,239,163,0.2);
+}
+
+.gallery-grid img:hover{ 
+  transform:scale(1.1) translateY(-8px) rotateZ(2deg); 
+  box-shadow:0 24px 64px rgba(46,197,108,0.25), 0 0 40px rgba(126,239,163,0.2);
+  border-color:var(--accent2);
+}
+
+/* PARTICLE CANVAS */
+#particleCanvas{ position:fixed; inset:0; width:100%; height:100%; z-index:80; pointer-events:none; mix-blend-mode:screen; }
+
+/* CONTROL */
+.particles-toggle{ 
+  position:fixed; 
+  right:18px; 
+  bottom:18px; 
+  z-index:1200; 
+  padding:12px 16px; 
+  border-radius:14px; 
+  border:none; 
+  background:linear-gradient(135deg,var(--accent1),var(--accent2)); 
+  color:#04260d; 
+  font-weight:700;
+  font-size:.9rem;
+  box-shadow:0 12px 32px rgba(46,197,108,0.2); 
+  cursor:pointer; 
+  transition:all .3s ease;
+  transform:scale(1);
+}
+
+.particles-toggle:hover{ 
+  transform:translateY(-4px) scale(1.08); 
+  box-shadow:0 16px 48px rgba(46,197,108,0.3); 
+}
+
+.particles-toggle:active{ transform:scale(0.95); }
+
+/* LIGHTBOX */
+.lightbox{ 
+  position:fixed; 
+  inset:0; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  background:rgba(0,0,0,0.92); 
+  z-index:1600;
+  animation:fadeIn .3s ease;
+}
+
+@keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+
+.lightbox img{ 
+  max-width:92%; 
+  max-height:86%; 
+  border-radius:14px; 
+  box-shadow:0 24px 96px rgba(0,0,0,0.8);
+  animation:zoomIn .3s ease;
+}
+
+@keyframes zoomIn{ from{transform:scale(0.8)} to{transform:scale(1)} }
+
+.lightbox button{ 
+  position:fixed; 
+  right:28px; 
+  top:28px; 
+  padding:12px 16px; 
+  border-radius:12px; 
+  border:none; 
+  background:linear-gradient(135deg, #fff, #f5f5f5);
+  font-weight:700; 
+  cursor:pointer; 
+  z-index:1700;
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+  transition:all .2s ease;
+  font-size:1.2rem;
+}
+
+.lightbox button:hover{ 
+  transform:scale(1.1);
+  box-shadow:0 12px 32px rgba(0,0,0,0.4);
+}
+
+/* FOOTER */
+.footer{ 
+  text-align:center; 
+  padding:24px; 
+  color:var(--muted); 
+  margin-top:36px; 
+  border-top:2px solid rgba(139,94,60,0.15);
+  background:linear-gradient(135deg, rgba(255,255,255,0.5), rgba(243,229,171,0.3));
+  font-weight:500;
+}
+
+/* RESPONSIVE */
+@media(max-width:920px){ 
+  .page-header-inner{ text-align:center; padding:36px 20px; } 
+  .timeline-header{ grid-template-columns:1fr; }
+  .page-header-bg-layer{ background-attachment:scroll; }
+  .card{ padding:20px; }
+  .card h2{ font-size:1.4rem; }
+}
+
+@media(max-width:640px){
+  .page-title{ font-size:28px; }
+  .page-sub{ font-size:1rem; }
+  .card{ padding:16px; }
+  .timeline-card{ padding:16px; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<canvas id="particleCanvas" aria-hidden="true"></canvas>
+<button class="particles-toggle" id="particlesToggle">✨ Efek: ON</button>
+
+<header class="navbar" role="banner">
+  <div class="logo">
+    <img src="assets/logoi.png" alt="Saung Ranggon logo">
+    <span>Saung Ranggon Bekasi</span>
+  </div>
+  <nav>
+    <ul class="nav-links" role="menubar">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="sejarah.html" class="active">Sejarah</a></li>
+      <li><a href="arsitektur.html">Arsitektur</a></li>
+      <li><a href="galeri.html">Galeri</a></li>
+      <li><a href="nilai-budaya.html">Nilai Budaya</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="page-header" aria-label="Sejarah header">
+  <div class="page-header-bg-layer" style="background-image:url('assets/header/hero8.JPG')"></div>
+  <div class="page-header-overlay"></div>
+  <div class="page-header-inner">
+    <h1 class="page-title">📜 Sejarah Lengkap Saung Ranggon</h1>
+    <p class="page-sub">Dari masa Pangeran Rangga hingga menjadi cagar budaya — cerita panjang jejak sejarah, spiritualitas, dan identitas masyarakat Bekasi.</p>
+  </div>
+</section>
+
+<main class="container">
+  <!-- Timeline Snapshot -->
+  <section class="timeline-header">
+    <div class="timeline-card" data-era="1">
+      <div class="timeline-year">🏛️ Abad 15–16</div>
+      <div class="timeline-desc">Latar belakang & konteks wilayah Bekasi</div>
+    </div>
+    <div class="timeline-card" data-era="2">
+      <div class="timeline-year">👑 Abad 16</div>
+      <div class="timeline-desc">Pendirian oleh Pangeran Rangga</div>
+    </div>
+    <div class="timeline-card" data-era="3">
+      <div class="timeline-year">🔍 1821</div>
+      <div class="timeline-desc">Penemuan kembali & restorasi</div>
+    </div>
+    <div class="timeline-card" data-era="4">
+      <div class="timeline-year">⭐ Kini</div>
+      <div class="timeline-desc">Cagar budaya & warisan lokal</div>
+    </div>
+  </section>
+
+  <!-- 1. LATAR BELAKANG -->
+  <section class="card reveal">
+    <h2>1. Latar Belakang Sejarah Wilayah Bekasi</h2>
+    <p>Sebelum membahas bangunan, penting memahami konteks sejarahnya. Pada abad ke-15–16, wilayah Bekasi bukanlah kota industri seperti sekarang. Daerah ini adalah:</p>
+    <ul>
+      <li><strong>Wilayah agraris</strong> dengan banyak hutan dan persawahan</li>
+      <li><strong>Bagian dari pengaruh Kerajaan Sunda Pajajaran</strong></li>
+      <li><strong>Lokasi jalur perdagangan</strong> antara Sunda, Jayakarta, dan pelabuhan pesisir</li>
+      <li><strong>Tempat strategis bagi pejuang & bangsawan</strong> — lokasi "jalur belakang" yang tersembunyi</li>
+    </ul>
+    <div class="highlight-box">
+      <p><strong>💡 Konteks Penting:</strong> Karena letaknya aman dan jauh dari pusat VOC di Batavia, banyak tokoh memilih wilayah Bekasi untuk bermukim, berlindung, atau membangun pos kecil. <strong>Saung Ranggon adalah salah satu peninggalan terpenting dari periode itu.</strong></p>
+    </div>
+  </section>
+
+  <!-- 2. ASAL USUL -->
+  <section class="card reveal">
+    <h2>2. Asal-Usul & Pembangunan Saung Ranggon</h2>
+    <p>Menurut tradisi masyarakat Cikedokan, Saung Ranggon dibangun sekitar abad ke-16 oleh:</p>
+    <ul>
+      <li><strong>Pangeran Rangga</strong> — keturunan Pangeran Jayakarta</li>
+      <li>Termasuk keluarga bangsawan yang berjuang melawan VOC</li>
+      <li>Membangun saung ini sebagai: tempat singgah, tempat mengatur strategi, sekaligus tempat meditasi</li>
+    </ul>
+    <p style="margin-top:16px">Karena ia tokoh yang dihormati, bangunan kecil ini menjadi simbol keberadaan keluarga Jayakarta di wilayah Bekasi. Nama "Ranggon" berasal dari nama Rangga — artinya <strong>"Saung milik Rangga"</strong>.</p>
+    <div class="highlight-box">
+      <p><strong>🏛️ Makna Nama:</strong> Dalam bahasa Sunda, "Saung" = rumah/pondok sederhana. Jadi, Saung Ranggon secara harfiah berarti "Rumah/Pondok Rangga" — penamaan yang mencerminkan kepemilikan dan penghormatan terhadap tokoh penting.</p>
+    </div>
+  </section>
+
+  <!-- 3. MASA SETELAH PEMBANGUNAN -->
+  <section class="card reveal">
+    <h2>3. Masa Setelah Pembangunan (Abad 17–18)</h2>
+    <p>Selama berabad-abad, Saung Ranggon digunakan untuk berbagai fungsi:</p>
+    
+    <h3>a. Tempat Singgah Pejuang ⚔️</h3>
+    <p>Bangunan panggung ini aman, tersembunyi, dan mudah dijaga. Para pejuang lokal sering menggunakan tempat ini untuk:</p>
+    <ul>
+      <li>Menyusun strategi perlawanan</li>
+      <li>Beristirahat saat melakukan perjalanan</li>
+      <li>Menyimpan logistik dan persenjataan sederhana</li>
+    </ul>
+
+    <h3>b. Tempat Berkumpul Tokoh Agama 🕌</h3>
+    <p>Beberapa ulama Betawi–Bekasi dikisahkan pernah menginap di sini saat perjalanan dakwah.</p>
+
+    <h3>c. Tempat Istirahat Para Petani 🌾</h3>
+    <p>Karena bentuknya "saung", penduduk memanfaatkannya untuk berteduh dan mengawasi sawah. Namun fungsi spiritualnya terus berkembang.</p>
+  </section>
+
+  <!-- 4. PENEMUAN KEMBALI -->
+  <section class="card reveal">
+    <h2>4. Penemuan Kembali Tahun 1821 🔎</h2>
+    <p>Pada tahun 1821, Saung ini ditemukan kembali oleh <strong>Raden Abbas</strong>, tokoh terpandang dari Kampung Cikedokan.</p>
+    <div class="highlight-box">
+      <p><strong>Kondisi Saat Ditemukan:</strong> Saung sudah tertimbun tanah dan sebagian tertutup semak. Setelah dibersihkan, keluarga Raden Abbas menjadi penjaga resmi saung secara turun-temurun.</p>
+    </div>
+    <p style="margin-top:16px"><strong>Hingga kini, juru kunci Saung Ranggon masih merupakan keturunan langsung dari garis Raden Abbas.</strong> Ini menunjukkan dedikasi komunitas dalam menjaga warisan budaya.</p>
+  </section>
+
+  <!-- 5. LEGENDA & KEPERCAYAAN -->
+  <section class="card reveal">
+    <h2>5. Legenda, Kepercayaan, & Cerita Masyarakat 👻</h2>
+    <p>Saung Ranggon memiliki tempat khusus dalam budaya lokal karena:</p>
+
+    <h3>a. Tempat Pertapaan (Spiritual) 🧘</h3>
+    <p>Beberapa cerita menyebutkan tokoh-tokoh spiritual melakukan meditasi di sini, termasuk:</p>
+    <ul>
+      <li>Para ulama</li>
+      <li>Pejuang masa kolonial</li>
+      <li><strong>Legenda terkenal:</strong> Presiden Soekarno dikatakan pernah bertapa atau bermeditasi dekat Sumur Keramat di area Saung Ranggon</li>
+    </ul>
+
+    <h3>b. Sumur Keramat (Sumur Bidadari) 💧</h3>
+    <p>Di kompleks yang sama terdapat sumur tua yang disebut "Sumur Bidadari" atau "Sumur Keramat Saung Ranggon". Masyarakat percaya bahwa:</p>
+    <ul>
+      <li>Airnya dulu digunakan untuk ritual kebersihan diri</li>
+      <li>Tempat bidadari turun (mitos setempat lokal)</li>
+      <li>Menjadi pusat energi spiritual bagi komunitas</li>
+    </ul>
+
+    <h3>c. Lokasi Angker & Suci ✨</h3>
+    <p>Banyak warga percaya tempat ini memiliki "penjaga gaib". Di sisi lain, tempat ini dihormati karena dianggap sakral dan memiliki energi positif yang kuat.</p>
+  </section>
+
+  <!-- 6. ARSITEKTUR DETAIL -->
+  <section class="card reveal">
+    <h2>6. Arsitektur Saung Ranggon (Analisis Detail) 🏗️</h2>
+
+    <h3>a. Struktur Rumah Panggung 📐</h3>
+    <p>Ketinggian panggung sekitar 2,5 meter dari tanah. Fungsinya:</p>
+    <ul>
+      <li>Melindungi dari banjir musiman</li>
+      <li>Menyimpan pusaka atau logistik penting</li>
+      <li>Penanda status sosial pada masa itu</li>
+    </ul>
+
+    <h3>b. Bahan Bangunan (Material Langka) 🌳</h3>
+    <p>Menggunakan kayu langka seperti:</p>
+    <ul>
+      <li><strong>Kayu ulin</strong> — sangat keras, tahan ratusan tahun (bahkan ribuan)</li>
+      <li><strong>Kayu nangka & kayu jati</strong> di beberapa bagian struktural</li>
+    </ul>
+
+    <h3>c. Tanpa Menggunakan Paku (Inovasi Tradisional) 🔧</h3>
+    <p>Seluruh sambungan memakai teknik:</p>
+    <ul>
+      <li><strong>Pasak kayu</strong> — tiang penghubung yang dipotong presisi</li>
+      <li><strong>Sistem ikat tradisional Sunda</strong> — menggunakan tali dari bahan alami</li>
+    </ul>
+    <p style="margin-top:8px">⭐ <strong>Ini bukti bahwa bangunan ini dibangun oleh tukang dengan keahlian tinggi & pengetahuan teknik konstruksi lanjutan.</strong></p>
+
+    <h3>d. Fondasi Batu Kali (Inovasi Genius) 🪨</h3>
+    <p>Tiang tidak ditanam ke tanah, tetapi:</p>
+    <ul>
+      <li>Diletakkan di atas batu pipih (platform batu)</li>
+      <li>Mencegah kayu menyerap kelembaban dari tanah</li>
+      <li>Mengurangi kerusakan dari rayap dan air</li>
+    </ul>
+
+    <h3>e. Atap Julang Ngapak (Desain Aerodinamis) 🏠</h3>
+    <p>Bentuk atap seperti "sayap burung terbang":</p>
+    <ul>
+      <li>Simbol perlindungan & kehormatan</li>
+      <li>Membuang air hujan dengan cepat & efisien</li>
+      <li>Menahan panas tropis dengan sirkulasi udara baik</li>
+    </ul>
+
+    <h3>f. Dinding Tanpa Jendela Besar 🚪</h3>
+    <p>Tidak ada jendela besar, hanya ventilasi kecil selebar ~30 cm. Tujuan:</p>
+    <ul>
+      <li>Menjaga privasi interior</li>
+      <li>Membatasi cahaya masuk (untuk meditasi/ibadah)</li>
+      <li>Mengurangi angin kencang & debu</li>
+      <li>Menghambat binatang liar masuk</li>
+    </ul>
+
+    <h3>g. Ruang Dalam (Fungsional & Minimalis) 🎋</h3>
+    <p>Di dalam saung terdapat:</p>
+    <ul>
+      <li>Lantai kayu tua yang masih kokoh</li>
+      <li>Ruang tanpa sekat — desain terbuka untuk diskusi kolektif</li>
+      <li>Area kecil sebagai tempat penyimpanan pusaka</li>
+      <li>Tempat duduk lesehan untuk meditasi</li>
+    </ul>
+    <p style="margin-top:8px">💭 <strong>Desainnya sederhana namun berfungsi sempurna untuk diskusi kelompok kecil dan kegiatan meditasi spiritual.</strong></p>
+  </section>
+
+  <!-- 7. PERAN MASA KOLONIAL -->
+  <section class="card reveal">
+    <h2>7. Peran Saung Ranggon pada Masa Kolonial 🇳🇱</h2>
+    <p>Pada periode kolonial Belanda, Saung berfungsi dengan peran ganda:</p>
+    <ul>
+      <li><strong>Tempat persembunyian</strong> tokoh-tokoh setempat dari pengejaran Belanda</li>
+      <li><strong>Lokasi aman</strong> untuk menyimpan dokumen atau benda penting</li>
+      <li><strong>Pos pengawasan rahasia</strong> terhadap pergerakan Belanda</li>
+    </ul>
+    <div class="highlight-box">
+      <p><strong>📜 Cerita Rakyat:</strong> Pasukan kolonial Belanda pernah mencari tokoh perlawanan di sekitar area Saung Ranggon, namun tidak menemukan saung karena tertutup pepohonan lebat & tersembunyi. Lokasi strategis membuatnya menjadi sanctuary yang aman.</p>
+    </div>
+  </section>
+
+  <!-- 8. STATUS CAGAR BUDAYA -->
+  <section class="card reveal">
+    <h2>8. Status Sebagai Cagar Budaya Kabupaten 🎖️</h2>
+    <p>Saung Ranggon kini diakui secara resmi sebagai:</p>
+    <ul>
+      <li><strong>Cagar Budaya Kabupaten Bekasi</strong></li>
+      <li>Salah satu ikon sejarah paling tua di Bekasi</li>
+      <li>Tempat penelitian arkeologi & historis</li>
+      <li>Objek wisata budaya & edukasi pelajar</li>
+    </ul>
+    <div class="highlight-box">
+      <p><strong>⚠️ Tantangan:</strong> Perawatan pemerintah terkadang kurang maksimal. Masyarakat berharap restorasi penuh dilakukan. Namun juru kunci & warga sekitar menjaga saung dengan dedikasi tinggi, menjadikan Saung Ranggon tetap lestari.</p>
+    </div>
+  </section>
+
+  <!-- 9. MAKNA BUDAYA -->
+  <section class="card reveal">
+    <h2>9. Makna Budaya & Identitas Lokal 🌍</h2>
+    <p>Saung Ranggon kini menjadi:</p>
+    <ul>
+      <li><strong>Simbol sejarah Bekasi</strong> — penghubung masa lalu & masa kini</li>
+      <li><strong>Bukti hubungan Bekasi–Jayakarta</strong> — continuity keluarga bangsawan</li>
+      <li><strong>Representasi arsitektur tradisional Sunda tua</strong> — teknik & material asli</li>
+      <li><strong>Pusat budaya & ziarah</strong> — kegiatan adat & spiritual komunitas</li>
+      <li><strong>Ikon penting yang memperkuat identitas masyarakat Bekasi</strong></li>
+    </ul>
+    <div class="highlight-box">
+      <p><strong>🌳 Kepercayaan Komunitas:</strong> Masyarakat percaya bahwa selama Saung Ranggon masih berdiri, jejak sejarah Bekasi & identitas budaya lokal tidak akan hilang. Ini bukan sekedar bangunan fisik, tetapi simbol kehidupan spiritual & kontinuitas budaya.</p>
+    </div>
+  </section>
+
+  <!-- 10. RINGKASAN -->
+  <section class="card reveal">
+    <h2>10. Ringkasan Paling Pendek 📌</h2>
+    <div class="highlight-box">
+      <h3 style="color:var(--accent2); margin-bottom:12px;">Saung Ranggon dalam Satu Paragraf</h3>
+      <p><strong>Saung Ranggon adalah bangunan abad ke-16 yang dibangun oleh Pangeran Rangga, keturunan Pangeran Jayakarta.</strong> Bangunan kayu panggung ini menjadi saksi perjuangan, tempat singgah tokoh besar, pusat spiritual, dan kini ditetapkan sebagai cagar budaya Bekasi. Dengan arsitektur asli tanpa paku, cerita sejarah yang kaya, dan legenda mistisnya, <strong>Saung Ranggon menjadi salah satu peninggalan budaya paling penting di Kabupaten Bekasi</strong> dan warisan yang harus dijaga turun-temurun.</p>
+    </div>
+  </section>
+
+  <!-- GALERI FOTO -->
+  <section class="card reveal" style="margin-top:28px">
+    <h2>📸 Dokumentasi Foto Saung Ranggon</h2>
+    <div class="gallery-grid">
+      <img src="assets/sejarah1.jpg" alt="Saung Ranggon 1" onclick="openLightbox(this.src)">
+      <img src="assets/sejarah2.jpg" alt="Saung Ranggon 2" onclick="openLightbox(this.src)">
+      <img src="assets/sejarah3.jpg" alt="Saung Ranggon 3" onclick="openLightbox(this.src)">
+      <img src="assets/sejarah4.jpg" alt="Saung Ranggon 4" onclick="openLightbox(this.src)">
+      <img src="assets/header/hero9.JPG" alt="Sumur Keramat" onclick="openLightbox(this.src)">
+      <img src="assets/header/hero1.JPG" alt="Detail Arsitektur" onclick="openLightbox(this.src)">
+    </div>
+  </section>
+</main>
+
+<footer class="footer">© 2025 Saung Ranggon Bekasi — Warisan Budaya Lokal yang Terjaga dengan Penuh Dedikasi 🙏</footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+
+/* PROGRESS BAR */
+const progress = $('#progress');
+function updateProgress(){
+  const h = document.documentElement;
+  const val = (h.scrollTop || document.body.scrollTop) / (h.scrollHeight - h.clientHeight);
+  progress.style.width = Math.max(0, Math.min(1, val)) * 100 + '%';
+}
+window.addEventListener('scroll', updateProgress, {passive:true});
+updateProgress();
+
+/* PAGE PARALLAX */
+const phbg = document.querySelector('.page-header-bg-layer');
+if(phbg){
+  window.addEventListener('scroll', ()=> {
+    phbg.style.transform = `translateY(${window.scrollY * 0.08}px)`;
+  }, {passive:true});
+}
+
+/* SCROLL REVEAL */
+const reveals = $$('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=> { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: .08});
+reveals.forEach(el => io.observe(el));
+
+/* LIGHTBOX */
+function openLightbox(src){
+  const lb = document.createElement('div');
+  lb.className = 'lightbox';
+  lb.innerHTML = `<img src="${src}" /><button onclick="this.parentElement.remove()">✕</button>`;
+  lb.addEventListener('click', e => { if(e.target === lb) lb.remove(); });
+  document.body.appendChild(lb);
+}
+
+/* PARTICLES */
+(() => {
+  const canvas = document.getElementById('particleCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let DPR = Math.min(2, window.devicePixelRatio || 1);
+  function resize(){ canvas.width = innerWidth * DPR; canvas.height = innerHeight * DPR; canvas.style.width = innerWidth + 'px'; canvas.style.height = innerHeight + 'px'; ctx.setTransform(DPR,0,0,DPR,0,0); }
+  resize(); window.addEventListener('resize', ()=>{ DPR = Math.min(2, window.devicePixelRatio || 1); resize(); });
+
+  const glitters = Array.from({length: Math.min(160, Math.round(innerWidth/8))}, ()=>({
+    x: Math.random()*innerWidth, y: Math.random()*innerHeight, r: Math.random()*2+0.5, a: Math.random()*0.9+0.1, da: (Math.random()*0.028)+0.004
+  }));
+  const leaves = Array.from({length: innerWidth<900?5:12}, ()=>({
+    x: Math.random()*innerWidth, y: -Math.random()*innerHeight, size: 18+Math.random()*28, vy: 0.28+Math.random()*0.75, ang: Math.random()*Math.PI*2, spin: (Math.random()-0.5)*0.025
+  }));
+
+  let running = true;
+  document.addEventListener('visibilitychange', ()=> running = !document.hidden);
+  $('#particlesToggle').addEventListener('click', ()=>{
+    running = !running;
+    $('#particlesToggle').innerText = running ? '✨ Efek: ON' : '🔇 Efek: OFF';
+    if(!running) ctx.clearRect(0, 0, innerWidth, innerHeight);
+  });
+
+  function update(){
+    glitters.forEach(g=>{
+      g.a += (Math.random()-0.52)*0.1;
+      if(g.a < 0.05) g.a = 0.05;
+      if(g.a > 1) g.a = 1;
+      g.x += Math.sin(performance.now()*0.0006 + g.y*0.0003) * 0.35;
+      g.y += Math.cos(performance.now()*0.0005 + g.x*0.0004) * 0.12;
+      if(g.y > innerHeight + 50){ g.y = -30; g.x = Math.random()*innerWidth; }
+    });
+    leaves.forEach(l=>{
+      l.y += l.vy;
+      l.x += Math.sin(l.y*0.014 + performance.now()*0.0007) * 1.2;
+      l.ang += l.spin;
+      if(l.y > innerHeight + 100){ l.y = -50 - Math.random()*220; l.x = Math.random()*innerWidth; }
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    glitters.forEach(g=>{
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255,248,220,${g.a*0.75})`;
+      ctx.arc(g.x, g.y, g.r, 0, Math.PI*2);
+      ctx.fill();
+      ctx.strokeStyle = `rgba(126,239,163,${g.a*0.3})`;
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    });
+    leaves.forEach(l=>{
+      ctx.save();
+      ctx.translate(l.x, l.y);
+      ctx.rotate(l.ang);
+      ctx.globalAlpha = 0.95;
+      ctx.fillStyle = 'rgba(139,94,60,0.92)';
+      ctx.beginPath(); ctx.ellipse(0,0,l.size*0.5,l.size*0.26,0,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle = 'rgba(163,110,71,0.4)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.restore();
+    });
+  }
+
+  function loop(){ if(!running) return; update(); draw(); requestAnimationFrame(loop); }
+  loop();
+})();
+</script>
+</body>
+</html>

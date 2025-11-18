@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Saung Ranggon — Galeri</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wood:#8B5E3C;--bamboo:#F3E5AB;--muted:#6b6b6b;--accent1:#7EEFA3;--accent2:#2EC56C;
+  --glass: rgba(255,255,255,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:"Poppins",sans-serif;background: linear-gradient(180deg,#fbf7ee,#f6f2ea);color:#222;-webkit-font-smoothing:antialiased;line-height:1.55;overflow-x:hidden;}
+.navbar{position:sticky;top:0;z-index:1400;display:flex;align-items:center;justify-content:space-between;padding:14px 28px;background:linear-gradient(180deg,rgba(139,94,60,0.98),rgba(139,94,60,0.88));color:white;box-shadow:0 8px 28px rgba(0,0,0,0.14);backdrop-filter:blur(6px)}
+.logo{font-family:"Cinzel Decorative",serif;font-size:20px;color:var(--bamboo);display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .3s ease;}
+.logo img{display:inline-block;width:44px;height:44px;border-radius:10px;object-fit:cover;box-shadow:0 4px 12px rgba(126,239,163,0.4);transition:all .3s cubic-bezier(.2,.9,.2,1);}
+.logo:hover img{transform:scale(1.12);box-shadow:0 6px 16px rgba(126,239,163,0.6),0 0 20px rgba(126,239,163,0.4);}
+.nav-links{list-style:none;display:flex;gap:18px;align-items:center;margin:0;padding:0}
+.nav-links a{color:var(--bamboo);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600}
+.nav-links a.active,.nav-links a:hover{background:rgba(255,255,255,0.06);color:white}
+
+.container{max-width:1200px;margin:18px auto;padding:0 18px}
+
+/* HERO (single photo behind title) */
+.hero{position:relative;min-height:42vh;display:flex;align-items:center;padding:24px;border-bottom-left-radius:16px;border-bottom-right-radius:16px;margin-bottom:18px;overflow:hidden}
+.hero .layer{position:absolute;inset:0;background-size:cover;background-position:center;will-change:transform;transition:transform .12s linear}
+.hero .layer.bg{
+  background-image: url('assets/galeri/galeri (69).jpg');
+  background-position:center;
+  background-size:cover;
+  filter:brightness(.58) contrast(1.02);
+}
+.hero .layer.overlay{ background: linear-gradient(180deg, rgba(12,18,10,0.18), rgba(8,8,8,0.34)); mix-blend-mode:multiply; }
+.hero-inner{position:relative;z-index:6;color:white;max-width:1100px;display:flex;align-items:center;gap:20px}
+
+/* teks judul */
+.page-title{font-family:'Cinzel Decorative',serif;font-size:clamp(28px,4.6vw,44px);margin-bottom:8px;letter-spacing:-0.6px}
+.page-sub{opacity:.95;max-width:820px}
+
+/* Title media area (editable by user) */
+.title-media{display:flex;gap:12px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.title-media img{width:120px;height:78px;object-fit:cover;border-radius:8px;border:3px solid rgba(255,255,255,0.08);cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,0.18);transition:transform .16s ease}
+.title-media img:hover{transform:translateY(-6px) scale(1.03)}
+
+/* section heading */
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-top:8px;margin-bottom:10px}
+.section-head h2{font-family:'Cinzel Decorative',serif;color:var(--wood);font-size:22px}
+
+/* GALLERY: grid (rapih, tidak acak) */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;margin-top:8px;align-items:start}
+@media(max-width:900px){.grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}}
+
+/* gallery card */
+.card{
+  width:100%;border-radius:12px;background:linear-gradient(180deg,#fff,#fbf6ec);
+  box-shadow:0 12px 36px rgba(0,0,0,0.06);overflow:hidden;transform-origin:center center;will-change:transform;
+  transition:transform .22s cubic-bezier(.2,.9,.2,1),box-shadow .22s ease,filter .22s ease,opacity .45s ease;
+  opacity:0;transform:translateY(12px) scale(.995);
+}
+.card.visible{opacity:1;transform:none}
+.card img{width:100%;height:220px;display:block;object-fit:cover;transition:transform .45s cubic-bezier(.2,.9,.2,1)}
+@media(max-width:480px){ .card img{height:180px} }
+.card .meta{padding:10px 12px;color:var(--muted);font-size:.95rem;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tag{background:rgba(46,197,108,0.09);color:var(--accent2);padding:6px 8px;border-radius:8px;font-weight:700;font-size:.9rem}
+
+/* tilt effect hint */
+.card:hover{box-shadow:0 28px 60px rgba(0,0,0,0.12)}
+
+/* QR section single */
+.qr-section{margin:18px 0;padding:18px;background:linear-gradient(180deg,#fff,#fbf6ec);border-radius:12px;box-shadow:0 12px 36px rgba(0,0,0,0.06);display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.qr-left{display:flex;gap:18px;align-items:center}
+.qr-container{width:180px;height:180px;background:white;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,0.08)}
+.qr-container img{width:88%;height:88%;object-fit:contain;border-radius:6px}
+.qr-meta{max-width:640px;color:var(--muted)}
+.qr-meta h3{font-family:'Cinzel Decorative',serif;color:var(--wood);margin-bottom:6px}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.85);z-index:2000;padding:20px}
+.lightbox img{max-width:96%;max-height:92%;border-radius:10px;box-shadow:0 20px 80px rgba(0,0,0,0.7)}
+
+/* particles canvas */
+#particleCanvas{position:fixed;inset:0;pointer-events:none;z-index:80}
+
+/* helpers */
+.fade-in{animation:enter .48s cubic-bezier(.2,.9,.2,1) both}
+@keyframes enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<canvas id="particleCanvas" aria-hidden="true"></canvas>
+<button id="particlesToggle" style="position:fixed;right:18px;bottom:18px;z-index:1200;padding:10px 12px;border-radius:12px;border:none;background:linear-gradient(180deg,#7EEFA3,#2EC56C);color:#04260d;font-weight:700;box-shadow:0 10px 28px rgba(46,197,108,0.12);cursor:pointer">Efek: ON</button>
+
+<header class="navbar" role="banner">
+  <a href="index.html" class="logo">
+    <img src="assets/logoi.png" alt="Saung Ranggon logo">
+    Saung Ranggon Bekasi
+  </a>
+  <nav><ul class="nav-links" role="menubar">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="sejarah.html">Sejarah</a></li>
+    <li><a href="arsitektur.html">Arsitektur</a></li>
+    <li><a href="galeri.html" class="active">Galeri</a></li>
+    <li><a href="nilai-budaya.html">Nilai Budaya</a></li>
+  </ul></nav>
+</header>
+
+<!-- HERO dengan 1 foto di belakang judul -->
+<section class="hero" aria-label="Hero Galeri">
+  <div class="layer bg" data-speed="0.06" aria-hidden="true"></div>
+  <div class="layer overlay" data-speed="0.12" aria-hidden="true"></div>
+
+  <div class="hero-inner container">
+    <div>
+      <h1 class="page-title">Galeri Saung Ranggon</h1>
+
+      <!-- area tambahan gambar di judul (kosong - user bisa menambah) -->
+      <div class="title-media" id="titleMedia" aria-hidden="false"></div>
+
+      <p class="page-sub">Koleksi foto & momen budaya — klik thumbnail untuk memperbesar, atau tambahkan gambar judul di area di atas.</p>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+  <section class="card fade-in" style="padding:14px;">
+    <h3 style="margin-bottom:6px">Dokumentasi Visual</h3>
+    <p style="color:var(--muted)">Scroll untuk memunculkan gambar; klik thumbnail untuk memperbesar. Arahkan kursor di atas gambar untuk efek tilt & parallax.</p>
+  </section>
+
+  <!-- QR untuk YouTube / video -->
+  <div class="qr-section">
+    <div class="qr-left">
+      <div class="qr-container"><img src="assets/qr.jpg" alt="QR Code YouTube"></div>
+      <div class="qr-meta">
+        <h3>Tonton Video Kami</h3>
+        <p style="color:var(--muted)">Scan QR code atau klik untuk membuka dokumentasi video Saung Ranggon di YouTube.</p>
+      </div>
+    </div>
+    <div style="text-align:right;color:var(--muted)">Satu tempat untuk video — tetap ringkas & fokus.</div>
+  </div>
+
+  <!-- Gallery utama -->
+  <div class="section-head"><h2>Galeri Utama</h2></div>
+  <div class="grid" id="gallery_main" aria-live="polite"></div>
+
+  <!-- Gallery tambahan 1 -->
+  <div class="section-head"><h2></h2></div>
+  <div class="grid" id="gallery_arch" aria-live="polite"></div>
+
+  <!-- Gallery tambahan 2 -->
+  <div class="section-head"><h2></h2></div>
+  <div class="grid" id="gallery_trad" aria-live="polite"></div>
+</main>
+
+<footer style="text-align:center;padding:18px;color:var(--muted)">© 2025 Saung Ranggon Bekasi</footer>
+
+<script>
+/* header parallax */
+const layers = document.querySelectorAll('.hero .layer');
+function headerParallax(){ const sc = window.scrollY; layers.forEach(l => { const s = parseFloat(l.dataset.speed)||0.06; l.style.transform = `translateY(${sc * s}px)`; }); }
+window.addEventListener('scroll', headerParallax);
+
+/* utility: build a gallery into container from array */
+let globalIndex = 0; // <-- global counter so numbering continues across galleries
+function buildGallery(containerId, items){
+  const cont = document.getElementById(containerId);
+  if(!cont) return;
+  items.forEach((it) => {
+    globalIndex++;
+    const card = document.createElement('div'); card.className = 'card';
+    const img = document.createElement('img'); img.setAttribute('data-src', it.src); img.alt = it.alt; img.loading = 'lazy';
+    const meta = document.createElement('div'); meta.className = 'meta';
+    meta.innerHTML = `<div class="tag">#${String(globalIndex).padStart(2,'0')}</div><div style="color:var(--muted)">${it.caption}</div>`;
+    card.appendChild(img); card.appendChild(meta); cont.appendChild(card);
+  });
+}
+
+/* image lists */
+/* utama */
+const mainImages = [
+  { src: 'assets/galeri/galeri (120).jpg', alt: 'Saung Ranggon 01', caption: 'Gambar 01' },
+  { src: 'assets/header/hero1.jpg', alt: 'Saung Ranggon 02', caption: 'Gambar 02' },
+  { src: 'assets/galeri/galeri (38).jpg', alt: 'Saung Ranggon 03', caption: 'Gambar 03' },
+  { src: 'assets/galeri/galeri (69).jpg', alt: 'Saung Ranggon 04', caption: 'Gambar 04' },
+  { src: 'assets/galeri/galeri (33).jpg', alt: 'Saung Ranggon 05', caption: 'Gambar 05' },
+  { src: 'assets/galeri/galeri (6).jpg', alt: 'Saung Ranggon 06', caption: 'Gambar 06' },
+  { src: 'assets/galeri/galeri (64).jpg', alt: 'Saung Ranggon 07', caption: 'Gambar 07' },
+  { src: 'assets/galeri/galeri (66).jpg', alt: 'Saung Ranggon 08', caption: 'Gambar 08' },
+  { src: 'assets/header/keris.jpg', alt: 'Saung Ranggon 09', caption: 'Gambar 09' },
+  { src: 'assets/galeri/galeri (40).jpg', alt: 'Saung Ranggon 10', caption: 'Gambar 10' },
+  { src: 'assets/galeri/galeri (44).jpg', alt: 'Saung Ranggon 11', caption: 'Gambar 11' },
+  { src: 'assets/galeri/galeri (17).jpg', alt: 'Saung Ranggon 12', caption: 'Gambar 12' },
+  { src: 'assets/galeri/galeri (50).jpg', alt: 'Saung Ranggon 13', caption: 'Gambar 13' },
+  { src: 'assets/galeri/galeri (55).jpg', alt: 'Saung Ranggon 14', caption: 'Gambar 14' },
+  { src: 'assets/galeri/galeri (25).jpg', alt: 'Saung Ranggon 15', caption: 'Gambar 15' },
+  { src: 'assets/galeri/galeri (3).jpg', alt: 'Saung Ranggon 16', caption: 'Gambar 16' },
+  { src: 'assets/galeri/galeri (45).jpg', alt: 'Saung Ranggon 17', caption: 'Gambar 17' },
+  { src: 'assets/galeri/galeri (12).jpg', alt: 'Saung Ranggon 18', caption: 'Gambar 18' },
+  { src: 'assets/galeri/galeri (95).jpg', alt: 'Saung Ranggon 19', caption: 'Gambar 19' },
+  { src: 'assets/galeri/galeri (62).jpg', alt: 'Saung Ranggon 20', caption: 'Gambar 20' }
+];
+
+/* arsitektur (baru) */
+
+
+/* tradisi & acara (baru) */
+
+/* build galleries (order deterministic) */
+buildGallery('gallery_main', mainImages);
+
+
+/* reveal & lazy load for all cards */
+const allCardsObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const el = entry.target;
+      el.classList.add('visible');
+      const img = el.querySelector('img');
+      if(img && img.dataset.src){ img.src = img.dataset.src; delete img.dataset.src; }
+      allCardsObserver.unobserve(el);
+    }
+  });
+}, {root:null,threshold:0.08});
+document.querySelectorAll('.card').forEach(c => allCardsObserver.observe(c));
+
+/* lightbox (works for gallery and title-media images) */
+function openLightboxSrc(src){
+  const lb = document.createElement('div'); lb.className='lightbox';
+  const big = document.createElement('img'); big.src = src;
+  lb.appendChild(big);
+  lb.addEventListener('click', ()=>{ lb.remove(); document.body.style.overflow=''; });
+  document.body.appendChild(lb);
+  document.body.style.overflow='hidden';
+}
+document.body.addEventListener('click', e=>{
+  const img = e.target.closest('.card img, .title-media img, .qr-container img');
+  if(!img) return;
+  // if QR click and has data-link attribute open link, else open image
+  const link = img.dataset && img.dataset.link;
+  if(link){ window.open(link, '_blank'); return; }
+  openLightboxSrc(img.src || img.getAttribute('data-src'));
+});
+
+/* tilt */
+function attachTilt(card){
+  let rect, cx, cy;
+  card.addEventListener('pointerenter', ()=>{ rect = card.getBoundingClientRect(); cx = rect.left + rect.width/2; cy = rect.top + rect.height/2; card.style.transition='transform .12s ease'; });
+  card.addEventListener('pointermove', (ev)=>{
+    const dx = (ev.clientX - cx)/rect.width;
+    const dy = (ev.clientY - cy)/rect.height;
+    const rx = dy * -5; const ry = dx * 8;
+    card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
+    const img = card.querySelector('img'); if(img) img.style.transform = `scale(1.04) translate(${dx*6}px,${dy*6}px)`;
+  });
+  card.addEventListener('pointerleave', ()=>{ card.style.transform=''; const img = card.querySelector('img'); if(img) img.style.transform=''; card.style.transition='transform .28s cubic-bezier(.2,.9,.2,1)'; });
+}
+document.querySelectorAll('.card').forEach(attachTilt);
+
+/* particles (lighter) */
+(() => {
+  const canvas = document.getElementById('particleCanvas'); if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let DPR = Math.min(2, window.devicePixelRatio || 1);
+  function resize(){ canvas.width = innerWidth * DPR; canvas.height = innerHeight * DPR; canvas.style.width = innerWidth + 'px'; canvas.style.height = innerHeight + 'px'; ctx.setTransform(DPR,0,0,DPR,0,0); }
+  resize(); window.addEventListener('resize', resize);
+  const glitters = Array.from({length: 30}, ()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.6+0.4,a:Math.random()*0.9,fade:(Math.random()*0.012)+0.004}));
+  function update(){ const t = performance.now()/1000; glitters.forEach(g=>{ g.a += g.fade; if(g.a>1){ g.fade*=-1; g.a=1 } if(g.a<=0){ g.x=Math.random()*innerWidth; g.y=Math.random()*innerHeight; g.a=0.02; g.fade*=-1 } }); }
+  function draw(){ ctx.clearRect(0,0,innerWidth,innerHeight); glitters.forEach(g=>{ ctx.beginPath(); ctx.fillStyle = `rgba(255,235,130,${g.a})`; ctx.arc(g.x,g.y,g.r,0,Math.PI*2); ctx.fill(); }); }
+  let enabled=true; const toggle=document.getElementById('particlesToggle'); toggle.addEventListener('click', ()=>{ enabled=!enabled; toggle.innerText = enabled ? 'Efek: ON' : 'Efek: OFF'; if(enabled) loop(); else ctx.clearRect(0,0,innerWidth,innerHeight); });
+  function loop(){ if(!enabled) return; update(); draw(); requestAnimationFrame(loop); }
+  loop();
+})();
+
+/* accessibility close lightbox */
+document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ document.querySelectorAll('.lightbox').forEach(lb=>lb.remove()); document.body.style.overflow=''; } });
+</script>
+</body>
+</html>

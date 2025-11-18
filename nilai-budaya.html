@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Saung Ranggon — Nilai Budaya</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--wood:#8B5E3C;--bamboo:#F3E5AB;--forest:#2E5A33;--cream:#FBF7EE;--muted:#606060;--accent1:#7EEFA3;--accent2:#2EC56C;--glass:rgba(255,255,255,0.08);}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Poppins",sans-serif;background:linear-gradient(180deg,#fbf7ee,#f0ebe3);color:#222;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+
+/* PROGRESS BAR */
+#progress{position:fixed;left:0;top:0;height:4px;width:0;background:linear-gradient(90deg,var(--accent1),var(--accent2));z-index:2000;box-shadow:0 6px 18px rgba(46,197,108,0.12);}
+
+/* NAVBAR */
+.navbar{position:sticky;top:0;z-index:1400;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;gap:12px;background:linear-gradient(180deg,rgba(139,94,60,0.96),rgba(139,94,60,0.9));color:white;box-shadow:0 8px 28px rgba(0,0,0,.18);backdrop-filter:blur(8px);}
+.logo{font-family:"Cinzel Decorative",serif;font-size:20px;color:var(--bamboo);display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .3s ease;}
+.logo img{display:inline-block;width:44px;height:44px;border-radius:10px;object-fit:cover;box-shadow:0 4px 12px rgba(126,239,163,0.4);transition:all .3s cubic-bezier(.2,.9,.2,1);}
+.logo:hover img{transform:scale(1.12);box-shadow:0 6px 16px rgba(126,239,163,0.6),0 0 20px rgba(126,239,163,0.4);}
+.nav-links{list-style:none;display:flex;gap:14px;align-items:center;}
+.nav-links a{color:rgba(255,255,255,0.95);text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:600;transition:all .2s ease;position:relative;}
+.nav-links a.active,.nav-links a:hover{background:rgba(255,255,255,0.12);color:white;}
+
+/* PAGE HEADER */
+.page-header{position:relative;min-height:55vh;display:flex;align-items:center;padding:40px 20px;border-bottom-left-radius:20px;border-bottom-right-radius:20px;margin-bottom:20px;overflow:hidden;}
+.hero-image{position:absolute;inset:0;z-index:1;overflow:hidden;}
+.hero-image img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;animation:zoomBg 12s ease-in-out infinite alternate;}
+.page-header-bg{position:absolute;inset:0;background-image:url('assets/hero_culture.jpg');background-size:cover;background-position:center;filter:brightness(.55) contrast(1.1) saturate(1.15);z-index:1;animation:zoomBg 12s ease-in-out infinite alternate;}
+@keyframes zoomBg{from{transform:scale(1)} to{transform:scale(1.08)}}
+.page-header-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,0.2),rgba(0,0,0,0.5)),radial-gradient(800px 400px at 15% 20%,rgba(126,239,163,0.12),transparent);z-index:2;backdrop-filter:blur(0.5px);}
+.page-header-inner{position:relative;z-index:6;color:white;max-width:900px;animation:fadeInUp 1s ease-out forwards;}
+.page-title{font-family:'Cinzel Decorative',serif;font-size:clamp(32px,5vw,56px);margin-bottom:16px;font-weight:700;text-shadow:0 10px 30px rgba(0,0,0,0.6);animation:slideDown .8s ease-out forwards;letter-spacing:-0.5px;}
+@keyframes slideDown{from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(25px)} to{opacity:1;transform:translateY(0)}}
+.page-sub{font-size:1.15rem;color:rgba(255,255,255,0.98);max-width:750px;text-shadow:0 6px 18px rgba(0,0,0,0.5);line-height:1.8;animation:slideDown .8s ease-out .15s both;}
+
+/* CONTAINER */
+.container{max-width:1100px;margin:32px auto;padding:0 18px;}
+
+/* SECTION CARDS */
+.culture-section{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:36px 0;}
+.culture-card{background:linear-gradient(135deg,#ffffff 0%,#fbf9f6 100%);padding:28px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.08);opacity:0;transform:translateY(24px);transition:.7s cubic-bezier(.2,.9,.2,1);border-left:5px solid var(--accent2);position:relative;overflow:hidden;cursor:pointer;}
+.culture-card::before{content:'';position:absolute;top:0;right:0;width:100px;height:100px;background:radial-gradient(circle,rgba(126,239,163,0.1),transparent);border-radius:50%;pointer-events:none;}
+.culture-card::after{content:'';position:absolute;bottom:-2px;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--accent1),var(--accent2));transform:scaleX(0);transition:transform .6s cubic-bezier(.2,.9,.2,1);transform-origin:left;}
+.culture-card.visible{opacity:1;transform:none;}
+.culture-card:hover{transform:translateY(-12px);box-shadow:0 20px 50px rgba(139,94,60,0.12),0 0 50px rgba(126,239,163,0.15);border-left-color:var(--accent1);}
+.culture-card:hover::after{transform:scaleX(1);}
+.culture-card-icon{font-size:2.8rem;margin-bottom:12px;display:inline-block;animation:bounce 2s ease-in-out infinite;}
+.culture-card:nth-child(2) .culture-card-icon{animation-delay:.2s;}
+.culture-card:nth-child(3) .culture-card-icon{animation-delay:.4s;}
+.culture-card:nth-child(4) .culture-card-icon{animation-delay:.6s;}
+.culture-card:nth-child(5) .culture-card-icon{animation-delay:.8s;}
+.culture-card:nth-child(6) .culture-card-icon{animation-delay:1s;}
+.culture-card:nth-child(7) .culture-card-icon{animation-delay:1.2s;}
+@keyframes bounce{0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)}}
+.culture-card h3{font-family:"Cinzel Decorative",serif;color:var(--wood);margin-bottom:12px;font-size:1.35rem;font-weight:700;}
+.culture-card p{color:var(--muted);line-height:1.7;font-weight:500;margin-bottom:8px;}
+.culture-card ul{margin-left:24px;color:var(--muted);}
+.culture-card li{margin-bottom:10px;line-height:1.6;}
+
+/* HIGHLIGHT BOX */
+.highlight-box{background:linear-gradient(135deg,rgba(126,239,163,0.12),rgba(46,197,108,0.06));border-left:5px solid var(--accent2);border-radius:12px;padding:20px;margin:20px 0;position:relative;backdrop-filter:blur(8px);opacity:0;transform:translateX(-20px);transition:.6s cubic-bezier(.2,.9,.2,1);}
+.highlight-box.visible{opacity:1;transform:translateX(0);}
+.highlight-box p{color:var(--muted);font-weight:500;margin:0;}
+.highlight-box strong{color:var(--wood);}
+
+/* DETAILED ARTICLE CARD */
+.article-card{background:linear-gradient(135deg,#ffffff 0%,#fbf9f6 100%);padding:32px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.08);margin-bottom:24px;opacity:0;transform:translateY(24px);transition:.7s cubic-bezier(.2,.9,.2,1);border-top:4px solid var(--accent2);position:relative;overflow:hidden;}
+.article-card::before{content:'';position:absolute;top:0;right:0;width:150px;height:150px;background:radial-gradient(circle,rgba(126,239,163,0.08),transparent);border-radius:50%;pointer-events:none;}
+.article-card.visible{opacity:1;transform:none;}
+.article-card h2{font-family:"Cinzel Decorative",serif;color:var(--wood);margin-bottom:16px;font-size:1.65rem;font-weight:700;}
+.article-card h3{color:var(--accent2);margin-top:20px;margin-bottom:12px;font-size:1.1rem;font-weight:700;}
+.article-card p{color:var(--muted);line-height:1.85;font-weight:500;margin-bottom:12px;}
+.article-card ul{margin-left:24px;color:var(--muted);}
+.article-card li{margin-bottom:10px;line-height:1.7;}
+
+/* GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:20px;}
+.gallery-item{position:relative;border-radius:10px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.1);cursor:pointer;aspect-ratio:1;transition:all .3s ease;}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s cubic-bezier(.2,.9,.2,1);display:block;}
+.gallery-item:hover img{transform:scale(1.12) rotate(2deg);}
+.gallery-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(126,239,163,0.2),rgba(46,197,108,0.4));display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s ease;}
+.gallery-item:hover .gallery-overlay{opacity:1;}
+.gallery-overlay-text{color:white;font-weight:700;font-size:1.1rem;text-shadow:0 4px 12px rgba(0,0,0,0.4);}
+
+/* PARTICLE CANVAS */
+#particleCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:80;pointer-events:auto;mix-blend-mode:screen;cursor:crosshair;}
+
+/* PARTICLES TOGGLE */
+.particles-toggle{position:fixed;right:18px;bottom:18px;z-index:1200;padding:12px 16px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#04260d;font-weight:700;font-size:.9rem;box-shadow:0 10px 28px rgba(46,197,108,0.2);cursor:pointer;transition:all .3s cubic-bezier(.2,.9,.2,1);}
+.particles-toggle:hover{transform:translateY(-4px) scale(1.06);box-shadow:0 14px 40px rgba(46,197,108,0.3);}
+.particles-toggle:active{transform:scale(0.95);}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.92);z-index:1600;animation:fadeIn .3s ease;backdrop-filter:blur(4px);}
+@keyframes fadeIn{from{opacity:0} to{opacity:1}}
+.lightbox img{max-width:94%;max-height:88%;border-radius:12px;box-shadow:0 20px 80px rgba(0,0,0,0.8);animation:zoomIn .3s cubic-bezier(.2,.9,.2,1);}
+@keyframes zoomIn{from{transform:scale(0.8)} to{transform:scale(1)}}
+.lightbox button{position:fixed;right:24px;top:24px;padding:10px 14px;border-radius:10px;border:none;background:white;font-weight:700;cursor:pointer;z-index:1700;box-shadow:0 8px 20px rgba(0,0,0,0.3);transition:all .2s ease;font-size:1.2rem;}
+.lightbox button:hover{transform:scale(1.1);box-shadow:0 10px 30px rgba(0,0,0,0.4);}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px;color:var(--muted);margin-top:36px;border-top:2px solid rgba(139,94,60,0.15);background:linear-gradient(135deg,rgba(255,255,255,0.5),rgba(243,229,171,0.3));font-weight:500;font-size:.95rem;}
+
+/* RESPONSIVE */
+@media(max-width:920px){
+  .page-header-inner{text-align:center;padding:30px 20px;}
+  .culture-section{grid-template-columns:repeat(2,1fr);gap:14px;}
+  .article-card{padding:24px;}
+  .page-header-bg{background-attachment:scroll;}
+  .hero-image img{object-position:center;}
+}
+
+@media(max-width:640px){
+  .page-title{font-size:26px;}
+  .page-sub{font-size:.95rem;}
+  .article-card{padding:18px;}
+  .culture-section{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .culture-card-icon{font-size:2.4rem;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<canvas id="particleCanvas"></canvas>
+<button class="particles-toggle" id="particlesToggle">✨ Interaktif: ON</button>
+
+<header class="navbar" role="banner">
+  <a href="index.html" class="logo">
+    <img src="assets/logoi.png" alt="Saung Ranggon logo">
+    Saung Ranggon Bekasi
+  </a>
+  <nav>
+    <ul class="nav-links" role="menubar">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="sejarah.html">Sejarah</a></li>
+      <li><a href="arsitektur.html">Arsitektur</a></li>
+      <li><a href="galeri.html">Galeri</a></li>
+      <li><a href="nilai-budaya.html" class="active">Nilai Budaya</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="page-header hero-section" aria-label="Nilai budaya header">
+  <div class="hero-image">
+    <img src="assets/galeri/galeri (66).JPG" alt="Hero image untuk nilai budaya">
+  </div>
+  <div class="page-header-overlay"></div>
+  <div class="page-header-inner container">
+    <h1 class="page-title">🌟 Nilai & Fungsi Budaya Saung Ranggon</h1>
+    <p class="page-sub">Gotong royong, hormat leluhur, dan praktik adat yang hidup di sekitar Saung Ranggon — warisan budaya yang masih berdenyut hingga hari ini.</p>
+  </div>
+</section>
+
+<main class="container">
+  <!-- GRID VIEW - 7 NILAI BUDAYA -->
+  <section class="culture-section">
+    <div class="culture-card reveal">
+      <div class="culture-card-icon">🌿</div>
+      <h3>Jejak Masa Lalu</h3>
+      <p>Saksi perjalanan masyarakat Betawi sejak abad ke-16, setiap tiang menyimpan cerita panjang sejarah.</p>
+    </div>
+
+    <div class="culture-card reveal">
+      <div class="culture-card-icon">🤝</div>
+      <h3>Kearifan Lokal</h3>
+      <p>Gotong royong, musyawarah, & kedekatan sosial yang mengakar dalam DNA masyarakat Betawi.</p>
+    </div>
+
+    <div class="culture-card reveal">
+      <div class="culture-card-icon">🏡</div>
+      <h3>Filosofi Arsitektur</h3>
+      <p>Sederhana namun sarat makna — harmoni sempurna antara manusia dan alam dalam setiap detail.</p>
+    </div>
+
+    <div class="culture-card reveal">
+      <div class="culture-card-icon">🌙</div>
+      <h3>Spiritualitas</h3>
+      <p>Ruang untuk menenangkan diri, bersemedi, dan mendekatkan diri pada Sang Pencipta dengan penuh khidmat.</p>
+    </div>
+
+    <div class="culture-card reveal">
+      <div class="culture-card-icon">🎭</div>
+      <h3>Identitas Betawi</h3>
+      <p>Simbol jati diri — ramah, hangat, & egaliter. Kebanggaan masyarakat yang menjaga warisan leluhur.</p>
+    </div>
+
+    <div class="culture-card reveal">
+      <div class="culture-card-icon">📚</div>
+      <h3>Ruang Belajar</h3>
+      <p>Pusat edukasi budaya bagi generasi muda agar tidak kehilangan identitas & akar budayanya.</p>
+    </div>
+
+    <div class="culture-card reveal">
+      <div class="culture-card-icon">🌳</div>
+      <h3>Cinta Lingkungan</h3>
+      <p>Mengajarkan keberlanjutan & menghargai sumber daya alam dengan cara hidup yang ramah alam.</p>
+    </div>
+  </section>
+
+  <!-- DETAILED ARTICLES -->
+  <section class="article-card reveal">
+    <h2>🌿 1. Jejak Masa Lalu yang Tetap Hidup</h2>
+    <p>Saung Ranggon dipercaya berdiri sejak abad ke-16, pada masa Raden Rangga. Bangunan kayu sederhana ini bukan sekadar tempat berteduh, tetapi <strong>saksi perjalanan masyarakat Betawi</strong> di wilayah Tambun. Setiap tiang dan baloknya menyimpan cerita tentang kehidupan, pertemuan, dan perjalanan sejarah yang panjang.</p>
+    <div class="highlight-box">
+      <p>💫 <strong>Makna Mendalam:</strong> Ketika Anda berada di Saung Ranggon, Anda sedang berdiri di atas tanah yang telah menampung ratusan tahun perjalanan manusia. Ini adalah koneksi langsung dengan nenek moyang kita.</p>
+    </div>
+  </section>
+
+  <section class="article-card reveal">
+    <h2>🤝 2. Kearifan Lokal: Hidup Bersama Lebih Bermakna</h2>
+    <p>Saung Ranggon merepresentasikan kebiasaan masyarakat dahulu yang menjunjung tinggi nilai-nilai sosial yang kini mulai langka. Inilah warisan nyata dari budaya Betawi yang egaliter dan penuh kehangatan.</p>
+    
+    <h3>Nilai-Nilai yang Tertanam:</h3>
+    <ul>
+      <li><strong>Gotong royong</strong> — Semangat bersama dalam membangun dan merawat tempat tinggal bersama</li>
+      <li><strong>Musyawarah</strong> — Cara menyelesaikan persoalan dengan duduk bersama & mendengarkan semua suara</li>
+      <li><strong>Kedekatan sosial</strong> — Saung menjadi ruang berkumpul, berbagi cerita, dan merayakan kebersamaan</li>
+      <li><strong>Saling menghormati</strong> — Dalam ruang terbuka tanpa hierarki, semua memiliki kedudukan yang sama</li>
+    </ul>
+
+    <p style="margin-top:16px;">Pada masanya, masyarakat berkumpul di saung untuk berbincang santai, bermusyawarah tentang isu desa, hingga merayakan momen spesial bersama-sama. <strong>Nilai ini tetap relevan hingga sekarang</strong>, di era di mana kebersamaan semakin langka.</p>
+
+    <div class="highlight-box">
+      <p>💡 <strong>Refleksi Modern:</strong> Saung Ranggon mengajarkan bahwa teknologi bukan satu-satunya cara mendekatkan manusia. Ruang fisik yang sederhana dengan niat tulus bisa menciptakan ikatan yang lebih kuat.</p>
+    </div>
+  </section>
+
+  <section class="article-card reveal">
+    <h2>🏡 3. Filosofi Arsitektur: Sederhana, Namun Sarat Makna</h2>
+    <p>Arsitektur Saung Ranggon bukan sekadar estetika yang indah dipandang – ia adalah <strong>simbol harmoni antara manusia dan alam</strong>. Setiap elemen dirancang dengan tujuan yang jelas dan penuh makna filosofis.</p>
+    
+    <h3>Pesan Tersembunyi dalam Desain:</h3>
+    <ul>
+      <li><strong>🏠 Bangunan panggung</strong> — Melindungi dari banjir dan kelembapan, mengajarkan pentingnya antisipasi & persiapan</li>
+      <li><strong>🌳 Bahan kayu alami</strong> — Mencerminkan kehidupan yang tidak berlebihan, sederhana tapi berkualitas</li>
+      <li><strong>💨 Ruang terbuka & sirkulasi udara alami</strong> — Menandakan keterbukaan pemikiran dan kejujuran dalam hidup bermasyarakat</li>
+      <li><strong>🌤️ Atap tinggi</strong> — Memberi kesan teduh & tenang, seolah mengajak siapa pun untuk menenangkan pikiran di dalamnya</li>
+    </ul>
+
+    <p style="margin-top:16px;">Filosofi bangunannya mengajarkan bahwa <strong>kesederhanaan dapat membawa kenyamanan</strong> yang lebih mendalam daripada kemewahan yang berlebihan. Ini adalah kebijaksanaan arsitektur tradisional.</p>
+
+    <div class="highlight-box">
+      <p>🎨 <strong>Desain yang Berbicara:</strong> Dalam setiap kurva atap, setiap celah angin, setiap pilihan kayu — ada percakapan antara arsitek dan alam. Saung Ranggon adalah dialog yang berusia ratusan tahun.</p>
+    </div>
+  </section>
+
+  <section class="article-card reveal">
+    <h2>🌙 4. Nilai Spiritualitas & Keheningan</h2>
+    <p>Secara tradisi, saung sering dipakai untuk menenangkan diri, bersemedi, atau menjalankan kegiatan spiritual sederhana. Suasana tenang, jauh dari hiruk pikuk kota modern, membuatnya menjadi <strong>tempat yang pas untuk merenung, bersyukur, dan mendekatkan diri pada Sang Pencipta</strong>.</p>
+
+    <h3>Pengalaman Spiritual yang Autentik:</h3>
+    <ul>
+      <li>Cahaya yang lembut masuk melalui ventilasi kecil, menciptakan suasana kontemplasi</li>
+      <li>Suara alam (angin, burung) menjadi musik latar yang menenangkan</li>
+      <li>Ruang yang luas memungkinkan postur berdoa yang nyaman & penuh khidmat</li>
+      <li>Tidak ada gangguan visual dari dunia luar — hanya fokus pada dalam diri</li>
+    </ul>
+
+    <p style="margin-top:16px;">Nilai ini menjadi <strong>bagian penting dari kehidupan masyarakat Betawi</strong> yang religius dan penuh sopan santun. Saung Ranggon bukan hanya ruang fisik, tetapi juga ruang spiritual yang mendalam.</p>
+
+    <div class="highlight-box">
+      <p>🧘 <strong>Meditasi Budaya:</strong> Di tengah dunia yang penuh kebisingan, Saung Ranggon menawarkan sesuatu yang langka — keheningan yang penuh makna, di mana jiwa dapat berbicara lebih keras daripada suara.</p>
+    </div>
+  </section>
+
+  <section class="article-card reveal">
+    <h2>🎭 5. Identitas & Kebanggaan Budaya Betawi</h2>
+    <p>Saung Ranggon bukan sekadar bangunan tua yang patut dihormati — ia adalah <strong>simbol hidup jati diri masyarakat Betawi</strong> di Bekasi dan sekitarnya. Sikap ramah, kehangatan keluarga, dan karakter egaliter masyarakat Betawi tercermin jelas melalui keberadaan saung yang terbuka untuk siapa pun yang datang.</p>
+
+    <h3>Identitas Betawi yang Terpancar:</h3>
+    <ul>
+      <li><strong>Ramah & Terbuka</strong> — Saung Ranggon tidak pernah menolak siapa pun yang datang dengan niat baik</li>
+      <li><strong>Kehangatan Keluarga</strong> — Suasana yang tercipta adalah seperti rumah sendiri — nyaman, aman, & diterima</li>
+      <li><strong>Egaliter</strong> — Tidak ada pembedaan status — semua orang duduk di lantai yang sama, berbicara dalam lingkaran yang setara</li>
+      <li><strong>Kearifan yang Hidup</strong> — Bukan sekadar cerita, tetapi praktik nyata yang masih berlangsung</li>
+    </ul>
+
+    <p style="margin-top:16px;">Bagi masyarakat lokal, Saung Ranggon adalah <strong>kebanggaan yang menjaga warisan leluhur tetap hidup</strong>. Ini adalah bukti nyata bahwa budaya Betawi tidak pernah mati — ia terus berdetak dalam ritme kehidupan sehari-hari.</p>
+
+    <div class="highlight-box">
+      <p>🌟 <strong>Warisan yang Dihidupi:</strong> Saung Ranggon bukan monumen yang diawetkan di museum. Ia adalah warisan yang terus dihidupi, dijalankan, dan dirasakan oleh generasi demi generasi.</p>
+    </div>
+  </section>
+
+  <section class="article-card reveal">
+    <h2>📚 6. Ruang Belajar Antar Generasi</h2>
+    <p>Di masa kini, Saung Ranggon berperan sebagai <strong>pusat edukasi budaya</strong> yang sangat penting. Bukan hanya untuk menyimpan sejarah, tetapi sebagai ruang belajar bagi generasi muda agar tidak kehilangan identitasnya.</p>
+
+    <h3>Apa yang Bisa Dipelajari di Saung Ranggon:</h3>
+    <ul>
+      <li><strong>📖 Sejarah Desa & Tokoh Masa Lalu</strong> — Mengenal siapa saja nenek moyang kita & apa yang mereka bangun</li>
+      <li><strong>🏗️ Arsitektur Tradisional</strong> — Memahami bagaimana leluhur membangun tanpa teknologi modern tetapi dengan kebijaksanaan tinggi</li>
+      <li><strong>👥 Cara Hidup Masyarakat Betawi Zaman Dulu</strong> — Belajar tentang rutinitas, tradisi, dan nilai-nilai yang mereka pegang teguh</li>
+      <li><strong>⭐ Nilai-Nilai Sosial Modern</strong> — Menemukan kembali gotong royong, musyawarah, & kebersamaan di era digital</li>
+      <li><strong>🌍 Keberlanjutan Lingkungan</strong> — Melihat bagaimana cara hidup sederhana dapat berkelanjutan untuk generasi mendatang</li>
+    </ul>
+
+    <p style="margin-top:16px;">Saung ini tidak hanya menyimpan sejarah dalam buku-buku — ia adalah <strong>ruang hidup di mana sejarah dapat dirasakan, disentuh, dan dipelajari secara langsung</strong>. Ini adalah pendidikan yang paling otentik.</p>
+
+    <div class="highlight-box">
+      <p>🎓 <strong>Pelajaran Nyata:</strong> Teknologi informasi dapat memberikan data tentang sejarah, tetapi Saung Ranggon memberikan sesuatu yang tidak bisa didownload — pengalaman langsung menghirup udara leluhur & merasakan denyut nadi budaya.</p>
+    </div>
+  </section>
+
+  <section class="article-card reveal">
+    <h2>🌳 7. Cinta Lingkungan: Warisan yang Ramah Alam</h2>
+    <p>Saung Ranggon adalah bukti nyata bahwa <strong>pembangunan manusia tidak harus merusak lingkungan</strong>. Bangunan ini menggunakan kayu alami, ventilasi alami, dan minim teknologi modern — model yang sangat relevan dengan tantangan lingkungan global saat ini.</p>
+
+    <h3>Pelajaran Keberlanjutan dari Saung Ranggon:</h3>
+    <ul>
+      <li><strong>🌲 Material Alami</strong> — Menggunakan kayu dari alam, tanpa processing berlebihan atau bahan kimia</li>
+      <li><strong>💨 Ventilasi Alami</strong> — Tidak perlu AC atau pendingin buatan, hanya aliran angin yang dirancang dengan cerdas</li>
+      <li><strong>☀️ Pencahayaan Alami</strong> — Cahaya matahari cukup untuk kebutuhan siang hari, tanpa lampu listrik yang boros</li>
+      <li><strong>🌍 Minimal Waste</strong> — Dibangun sesuai kebutuhan, tanpa eksklusivitas berlebihan yang merugikan sumber daya</li>
+    </ul>
+
+    <p style="margin-top:16px;">Nilai-nilai ini mengajarkan masyarakat untuk:</p>
+    <ul>
+      <li>✅ Menghargai sumber daya alam sebagai pemberian berharga, bukan komoditas untuk dieksploitasi</li>
+      <li>✅ Mengutamakan keberlanjutan dalam setiap keputusan membangun & mengonsumsi</li>
+      <li>✅ Membangun tanpa merusak lingkungan — sebuah filosofi yang kini sangat dibutuhkan</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p>🌍 <strong>Warisan Hijau:</strong> Saung Ranggon adalah bukti bahwa 400+ tahun yang lalu, leluhur kita sudah memahami keberlanjutan lingkungan dengan jauh lebih baik daripada banyak arsitek modern. Ini adalah aset budaya yang juga aset ekologi.</p>
+    </div>
+  </section>
+
+  <!-- PENUTUP -->
+  <section class="article-card reveal">
+    <h2>✨ Penutup: Warisan yang Perlu Dijaga</h2>
+    <p>Saung Ranggon adalah lebih dari sekadar bangunan. Ia adalah <strong>warisan nilai</strong>, <strong>cerita kehidupan</strong>, dan <strong>identitas budaya Betawi</strong> yang masih dapat dirasakan hingga hari ini. Dengan ketinggian panggungnya, kayu-kayunya yang kokoh, dan suasana yang tenang — saung ini berbicara dalam bahasa yang dipahami hati sebelum dipahami akal.</p>
+
+    <p style="margin-top:16px;">Ketika kita menjaga Saung Ranggon, kita tidak hanya menjaga bangunan. Kita menjaga:</p>
+    <ul>
+      <li>🌿 <strong>Warisan Leluhur</strong> — Pengetahuan & kebijaksanaan yang telah diuji oleh waktu</li>
+      <li>🤝 <strong>Ikatan Komunitas</strong> — Nilai-nilai gotong royong & kebersamaan yang masih relevan</li>
+      <li>🏡 <strong>Identitas Lokal</strong> — Karakter unik Betawi yang membedakan & memperkaya Indonesia</li>
+      <li>🌍 <strong>Model Keberlanjutan</strong> — Contoh nyata bagaimana membangun dengan harmoni alam</li>
+      <li>💫 <strong>Spiritualitas & Ketenangan</strong> — Ruang untuk jiwa di tengah dunia yang penuh kebisingan</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p><strong>🎯 Ajakan untuk Generasi Mendatang:</strong> Dengan menjaga dan mengenalkan Saung Ranggon, kita turut merawat akar budaya yang memperkaya kehidupan masyarakat sekarang dan selamanya. Ini bukan tentang nostalgia masa lalu — ini tentang menghubungkan masa kini dengan masa depan yang lebih bermakna.</p>
+    </div>
+  </section>
+
+  <!-- GALERI FOTO -->
+  <section class="article-card reveal">
+    <h2>📸 Galeri Momen Budaya Saung Ranggon</h2>
+    <p>Berikut adalah koleksi foto yang menangkap esensi kehidupan & nilai-nilai budaya yang hidup di Saung Ranggon.</p>
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openLightbox(this.querySelector('img').src)">
+        <img src="assets/galeri/galeri (35).JPG" alt="Silsilah Keturunan">
+        <div class="gallery-overlay"><div class="gallery-overlay-text">🔍 Berkumpul Bersama</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this.querySelector('img').src)">
+        <img src="assets/galeri/Sesajenjpg.jpg" alt="Ritual tradisional">
+        <div class="gallery-overlay"><div class="gallery-overlay-text">🔍 Ritual Budaya</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this.querySelector('img').src)">
+        <img src="assets/galeri/galeri (44).JPG" alt="Interior saung">
+        <div class="gallery-overlay"><div class="gallery-overlay-text">🔍 Ruang Makna</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this.querySelector('img').src)">
+        <img src="assets/galeri/galeri (9).JPG" alt="Exterior detail">
+        <div class="gallery-overlay"><div class="gallery-overlay-text">🔍 Detail Alam</div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">© 2025 Saung Ranggon Bekasi — Warisan Budaya Betawi yang Terus Hidup & Bermakna 🏛️</footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+
+/* PROGRESS BAR */
+const progress = $('#progress');
+function updateProgress(){
+  const h = document.documentElement;
+  const val = (h.scrollTop || document.body.scrollTop) / (h.scrollHeight - h.clientHeight);
+  progress.style.width = Math.max(0, Math.min(1, val)) * 100 + '%';
+}
+window.addEventListener('scroll', updateProgress, {passive:true});
+updateProgress();
+
+/* SCROLL REVEAL */
+const reveals = $$('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=> { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: .08});
+reveals.forEach(el => io.observe(el));
+
+/* LIGHTBOX */
+function openLightbox(src){
+  const lb = document.createElement('div');
+  lb.className = 'lightbox';
+  lb.innerHTML = `<img src="${src}" alt="Lightbox image"/><button onclick="this.parentElement.remove()">✕</button>`;
+  lb.addEventListener('click', e => { if(e.target === lb) lb.remove(); });
+  document.body.appendChild(lb);
+}
+
+/* INTERACTIVE PARTICLES */
+(() => {
+  const canvas = document.getElementById('particleCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let DPR = Math.min(2, window.devicePixelRatio || 1);
+  
+  function resize(){ 
+    canvas.width = innerWidth * DPR; 
+    canvas.height = innerHeight * DPR; 
+    canvas.style.width = innerWidth + 'px'; 
+    canvas.style.height = innerHeight + 'px'; 
+    ctx.setTransform(DPR,0,0,DPR,0,0); 
+  }
+  
+  resize(); 
+  window.addEventListener('resize', ()=>{ 
+    DPR = Math.min(2, window.devicePixelRatio || 1); 
+    resize(); 
+  });
+
+  const glitters = Array.from({length: 200}, ()=>({
+    x: Math.random()*innerWidth, 
+    y: Math.random()*innerHeight, 
+    r: Math.random()*2.5+0.5, 
+    a: Math.random()*0.9+0.1, 
+    vx: (Math.random()-0.5)*1.5,
+    vy: (Math.random()-0.5)*1.5,
+  }));
+
+  const leaves = Array.from({length: 15}, ()=>({
+    x: Math.random()*innerWidth, 
+    y: -Math.random()*innerHeight, 
+    size: 20+Math.random()*32, 
+    vy: 0.35+Math.random()*0.8, 
+    ang: Math.random()*Math.PI*2, 
+    spin: (Math.random()-0.5)*0.03
+  }));
+
+  let mouseX = innerWidth / 2;
+  let mouseY = innerHeight / 2;
+  let running = true;
+  let attractMode = true;
+
+  canvas.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  document.addEventListener('visibilitychange', ()=> running = !document.hidden);
+  
+  $('#particlesToggle').addEventListener('click', ()=>{
+    running = !running;
+    attractMode = !attractMode;
+    $('#particlesToggle').innerText = running ? '✨ Interaktif: ON' : '🔇 Interaktif: OFF';
+    if(!running) ctx.clearRect(0, 0, innerWidth, innerHeight);
+  });
+
+  function update(){
+    glitters.forEach(g=>{
+      if(attractMode){
+        const dx = mouseX - g.x;
+        const dy = mouseY - g.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        const maxDist = 150;
+        
+        if(dist < maxDist){
+          const force = (1 - dist/maxDist) * 0.08;
+          g.vx += (dx/dist) * force;
+          g.vy += (dy/dist) * force;
+        }
+      }
+      
+      g.vx *= 0.95;
+      g.vy *= 0.95;
+      g.x += g.vx;
+      g.y += g.vy;
+      
+      if(g.x < 0) g.x = innerWidth;
+      if(g.x > innerWidth) g.x = 0;
+      if(g.y < 0) g.y = innerHeight;
+      if(g.y > innerHeight) g.y = 0;
+      
+      g.a += (Math.random()-0.52)*0.12;
+      if(g.a < 0.05) g.a = 0.05;
+      if(g.a > 1) g.a = 1;
+    });
+
+    leaves.forEach(l=>{
+      l.y += l.vy;
+      l.x += Math.sin(l.y*0.016 + performance.now()*0.0008) * 1.5;
+      l.ang += l.spin;
+      if(l.y > innerHeight + 100){ 
+        l.y = -50 - Math.random()*220; 
+        l.x = Math.random()*innerWidth; 
+      }
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    
+    glitters.forEach(g=>{
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255,248,220,${g.a*0.85})`;
+      ctx.arc(g.x, g.y, g.r, 0, Math.PI*2);
+      ctx.fill();
+      ctx.strokeStyle = `rgba(126,239,163,${g.a*0.5})`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    });
+
+    leaves.forEach(l=>{
+      ctx.save();
+      ctx.translate(l.x, l.y);
+      ctx.rotate(l.ang);
+      ctx.globalAlpha = 0.95;
+      ctx.fillStyle = 'rgba(139,94,60,0.92)';
+      ctx.beginPath(); 
+      ctx.ellipse(0,0,l.size*0.52,l.size*0.28,0,0,Math.PI*2); 
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(163,110,71,0.5)';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+      ctx.restore();
+    });
+  }
+
+  function loop(){ 
+    if(!running) return; 
+    update(); 
+    draw(); 
+    requestAnimationFrame(loop); 
+  }
+  
+  loop();
+})();
+</script>
+</body>
+</html>
